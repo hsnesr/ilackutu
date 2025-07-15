@@ -1,18 +1,27 @@
+import { createClient } from '@supabase/supabase-js';
 import jwt from 'jsonwebtoken';
 
-const SECRET_KEY = "gizli_anahtar";
+const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
+const SECRET_KEY = process.env.JWT_SECRET || 'gizli_anahtar';
 
-export default function handler(req, res) {
+export default async function handler(req, res) {
   if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Sadece POST isteği kabul edilir' });
+    return res.status(405).json({ message: 'Method not allowed' });
   }
 
   const { username, password } = req.body;
 
-  if (username === "admin" && password === "12345") {
-    const token = jwt.sign({ username }, SECRET_KEY, { expiresIn: '1h' });
-    return res.status(200).json({ success: true, token });
-  } else {
-    return res.status(401).json({ success: false, message: "Geçersiz kullanıcı adı veya şifre." });
+  const { data, error } = await supabase
+    .from('users')
+    .select('*')
+    .eq('username', username)
+    .eq('password', password)
+    .single();
+
+  if (error || !data) {
+    return res.status(401).json({ success: false, message: 'Geçersiz giriş' });
   }
+
+  const token = jwt.sign({ username }, SECRET_KEY, { expiresIn: '1h' });
+  res.json({ success: true, token });
 }
