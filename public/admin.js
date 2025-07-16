@@ -106,16 +106,16 @@ async function loadContents() {
       const row = document.createElement("tr");
       row.innerHTML = `
   <td>${post.title}</td>
-  <td>
+  <td style="width: 300px;max-width: 300px;overflow: hidden;border-right: 1px solid #ddd;text-overflow: ellipsis;">
     <div class="content-preview" style="max-width: 500px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
       ${post.content}
     </div>
   </td>
-  <td>
-    <button class="btn btn-sm btn-primary edit-btn mb-2" style="width: 150px;" data-id="${post.id}" data-title="${post.title}" data-content="${post.content}">
+  <td style="width: 300px;max-width: 300px;overflow: hidden;border-right: 1px solid #ddd;text-overflow: ellipsis;">
+    <button class="btn btn-sm btn-primary edit-btn" data-id="${post.id}" data-title="${post.title}" data-content="${post.content}">
       Düzenle
     </button>
-    <button class="btn btn-sm btn-danger delete-btn" style="width: 150px" data-id="${post.id}">
+    <button class="btn btn-sm btn-danger delete-btn" data-id="${post.id}">
       Sil
     </button>
   </td>
