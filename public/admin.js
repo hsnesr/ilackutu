@@ -9,17 +9,17 @@ if (!token) {
       "Authorization": `Bearer ${token}`
     }
   })
-  .then(res => res.json())
-  .then(data => {
-    if (!data.valid) {
+    .then(res => res.json())
+    .then(data => {
+      if (!data.valid) {
+        localStorage.removeItem("token");
+        window.location.href = "login.html";
+      }
+    })
+    .catch(() => {
       localStorage.removeItem("token");
       window.location.href = "login.html";
-    }
-  })
-  .catch(() => {
-    localStorage.removeItem("token");
-    window.location.href = "login.html";
-  });
+    });
 }
 
 // Çıkış yap butonu
@@ -60,6 +60,7 @@ document.getElementById("contentForm").addEventListener("submit", async (e) => {
       message.innerHTML = `<div class="alert alert-success">${editId ? 'İçerik güncellendi.' : `"${data.post.title}" başlıklı içerik eklendi.`}</div>`;
       document.getElementById("contentForm").reset();
       document.getElementById("editId").value = ""; // Güncelleme bittiyse sıfırla
+      document.getElementById("cancelEditBtn").classList.add("d-none"); // iptal butonunu gizle
       loadContents(); // Listeyi yenile
     } else {
       message.innerHTML = `<div class="alert alert-danger">${data.error || 'Hata oluştu.'}</div>`;
@@ -67,25 +68,6 @@ document.getElementById("contentForm").addEventListener("submit", async (e) => {
   } catch (err) {
     message.innerHTML = `<div class="alert alert-danger">Sunucu hatası.</div>`;
   }
-});
-
-// İptal Et Butonu Show
-document.querySelectorAll(".edit-btn").forEach(button => {
-  button.addEventListener("click", () => {
-    const id = button.getAttribute("data-id");
-    const title = button.getAttribute("data-title");
-    const content = button.getAttribute("data-content");
-
-    document.getElementById("title").value = title;
-    document.getElementById("contentText").value = content;
-    document.getElementById("editId").value = id;
-
-    // İptal Et butonunu göster
-    document.getElementById("cancelEditBtn").classList.remove("d-none");
-
-    // "İçerik Ekle" sekmesine geç
-    new bootstrap.Tab(document.querySelector('#content-tab')).show();
-  });
 });
 
 // İptal Et Butonu click => clean form
@@ -102,15 +84,13 @@ document.getElementById("cancelEditBtn").addEventListener("click", () => {
 });
 
 
-
-
 // İÇERİKLERİM SEKMESİ
 async function loadContents() {
   try {
     const res = await fetch("/api/posts", {
       method: "GET",
       headers: {
-        "Authorization": `Bearer ${token}` // Eğer token ile doğrulama yapılıyorsa
+        "Authorization": `Bearer ${token}`
       }
     });
 
@@ -122,27 +102,44 @@ async function loadContents() {
     contentsTableBody.innerHTML = "";
 
     data.forEach(post => {
-  const row = document.createElement("tr");
-  row.innerHTML = `
-    <td>${post.title}</td>
-    <td>
-      <div class="content-preview" style="max-width: 500px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-        ${post.content}
-      </div>
-    </td>
-    <td>
-      <button class="btn btn-sm btn-warning edit-btn" data-id="${post.id}" data-title="${post.title}" data-content="${post.content}">
-        Düzenle
-      </button>
-    </td>
-  `;
-  contentsTableBody.appendChild(row);
-});
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td>${post.title}</td>
+        <td>
+          <div class="content-preview" style="max-width: 500px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+            ${post.content}
+          </div>
+        </td>
+        <td>
+          <button class="btn btn-sm btn-warning edit-btn" data-id="${post.id}" data-title="${post.title}" data-content="${post.content}">
+            Düzenle
+          </button>
+        </td>
+      `;
+      contentsTableBody.appendChild(row);
+    });
 
+    // 🔥 Tüm düzenle butonlarına olayları EKLE
+    document.querySelectorAll(".edit-btn").forEach(button => {
+      button.addEventListener("click", () => {
+        const id = button.getAttribute("data-id");
+        const title = button.getAttribute("data-title");
+        const content = button.getAttribute("data-content");
+
+        document.getElementById("title").value = title;
+        document.getElementById("contentText").value = content;
+        document.getElementById("editId").value = id;
+
+        // İptal Et butonunu göster
+        document.getElementById("cancelEditBtn").classList.remove("d-none");
+
+        // "İçerik Ekle" sekmesine geç
+        new bootstrap.Tab(document.querySelector('#content-tab')).show();
+      });
+    });
 
   } catch (err) {
     console.error(err);
-    // İstersen kullanıcıya da hata mesajı göster
   }
 }
 
