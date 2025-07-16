@@ -29,3 +29,11 @@ body#indexbody .card-text {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+body#adminbody .tab tbody#contentsTableBody td {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;        /* sadece 2 satır göster */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
