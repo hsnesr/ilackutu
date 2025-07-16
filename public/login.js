@@ -12,7 +12,7 @@ async function login() {
   }
 
   try {
-    const res = await fetch("https://hsnesr.store/api", {
+    const res = await fetch("/api/index.js", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username: user, password: pass }),
