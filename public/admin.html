@@ -11,12 +11,32 @@
     <p class="text-center">Burada sadece yetkililer işlem yapabilir.</p>
   </div>
 <script>
-  // Sayfa yüklendiğinde token kontrolü
+ <script>
   const token = localStorage.getItem("token");
+
   if (!token) {
-    alert("Lütfen önce giriş yapın.");
     window.location.href = "login.html";
+  } else {
+    fetch("/api/verify", {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${token}`
+      }
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (!data.valid) {
+        localStorage.removeItem("token");
+        window.location.href = "login.html";
+      }
+    })
+    .catch(() => {
+      localStorage.removeItem("token");
+      window.location.href = "login.html";
+    });
   }
+</script>
+
 </script>
 
 </body>
