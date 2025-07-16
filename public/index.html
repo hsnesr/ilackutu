@@ -26,35 +26,40 @@
 
   <!-- Blog Gönderileri -->
   <main class="container">
-    <div class="row g-4">
-      <!-- Örnek Blog Kartı -->
-      <div class="col-md-6">
-        <div class="card h-100 shadow-sm">
-          <div class="card-body">
-            <h5 class="card-title">İlk Blog Yazısı</h5>
-            <p class="card-text">Bu, örnek bir yazı içeriğidir. Gerçek yazılar yakında buraya yüklenecek.</p>
-            <a href="#" class="btn btn-primary btn-sm">Devamını Oku</a>
-          </div>
-        </div>
-      </div>
+    
+<div class="container mt-5">
+  <div id="blogList" class="row g-4"></div>
+</div>
 
-      <!-- Yeni kartlar buraya çoğaltılabilir -->
-      <div class="col-md-6">
-        <div class="card h-100 shadow-sm">
-          <div class="card-body">
-            <h5 class="card-title">İkinci Yazı</h5>
-            <p class="card-text">Bu sayfa Vercel, GitHub ve Bootstrap kullanılarak oluşturuldu.</p>
-            <a href="#" class="btn btn-primary btn-sm">Devamını Oku</a>
-          </div>
-        </div>
-      </div>
-    </div>
+     
   </main>
 
   <!-- Footer -->
   <footer class="bg-dark text-white text-center py-3 mt-5">
     <small>&copy; 2025 hsnesr.store | Tüm hakları saklıdır.</small>
   </footer>
+<script>
+fetch('/api/posts')
+  .then(res => res.json())
+  .then(posts => {
+    const container = document.getElementById('blogList');
+    container.innerHTML = '';
+
+    posts.forEach(post => {
+      const col = document.createElement('div');
+      col.className = 'col-md-6';
+      col.innerHTML = `
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">${post.title}</h5>
+            <p class="card-text">${post.content}</p>
+          </div>
+        </div>
+      `;
+      container.appendChild(col);
+    });
+  });
+</script>
 
 </body>
 </html>
