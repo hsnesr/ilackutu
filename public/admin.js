@@ -69,6 +69,40 @@ document.getElementById("contentForm").addEventListener("submit", async (e) => {
   }
 });
 
+// İptal Et Butonu Show
+document.querySelectorAll(".edit-btn").forEach(button => {
+  button.addEventListener("click", () => {
+    const id = button.getAttribute("data-id");
+    const title = button.getAttribute("data-title");
+    const content = button.getAttribute("data-content");
+
+    document.getElementById("title").value = title;
+    document.getElementById("contentText").value = content;
+    document.getElementById("editId").value = id;
+
+    // İptal Et butonunu göster
+    document.getElementById("cancelEditBtn").classList.remove("d-none");
+
+    // "İçerik Ekle" sekmesine geç
+    new bootstrap.Tab(document.querySelector('#content-tab')).show();
+  });
+});
+
+// İptal Et Butonu click => clean form
+document.getElementById("cancelEditBtn").addEventListener("click", () => {
+  document.getElementById("contentForm").reset();
+  document.getElementById("editId").value = "";
+  document.getElementById("message").innerHTML = "";
+
+  // Butonu tekrar gizle
+  document.getElementById("cancelEditBtn").classList.add("d-none");
+
+  // "İçeriklerim" sekmesine geç
+  new bootstrap.Tab(document.querySelector('#contents-tab')).show();
+});
+
+
+
 
 // İÇERİKLERİM SEKMESİ
 async function loadContents() {
@@ -97,30 +131,13 @@ async function loadContents() {
       </div>
     </td>
     <td>
-      <button class="btn btn-sm text-light btn-warning edit-btn" data-id="${post.id}" data-title="${post.title}" data-content="${post.content}">
+      <button class="btn btn-sm btn-warning edit-btn" data-id="${post.id}" data-title="${post.title}" data-content="${post.content}">
         Düzenle
       </button>
     </td>
   `;
   contentsTableBody.appendChild(row);
 });
-
-document.querySelectorAll(".edit-btn").forEach(button => {
-  button.addEventListener("click", () => {
-    const id = button.getAttribute("data-id");
-    const title = button.getAttribute("data-title");
-    const content = button.getAttribute("data-content");
-
-    // Form alanlarını doldur
-    document.getElementById("title").value = title;
-    document.getElementById("contentText").value = content;
-    document.getElementById("editId").value = id;
-
-    // "İçerik Ekle" sekmesine geç
-    new bootstrap.Tab(document.querySelector('#content-tab')).show();
-  });
-});
-
 
 
   } catch (err) {
