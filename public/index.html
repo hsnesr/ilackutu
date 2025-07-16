@@ -40,7 +40,7 @@
   </footer>
 <script>
     async function loadPosts() {
-      const postsDiv = document.getElementById("posts");
+      const postsDiv = document.getElementById("blogList");
 
       try {
         const res = await fetch("/api/posts");
@@ -54,14 +54,17 @@
         }
 
         postsDiv.innerHTML = posts.map(post => `
-          <a href="#" class="list-group-item list-group-item-action flex-column align-items-start mb-2">
-            <div class="d-flex w-100 justify-content-between">
-              <h5 class="mb-1">${post.title}</h5>
-              <small>${new Date(post.created_at).toLocaleDateString()}</small>
-            </div>
-            <p class="mb-1">${post.content}</p>
-          </a>
-        `).join("");
+  <div class="col-md-6 col-lg-4">
+    <div class="card h-100">
+      <div class="card-body">
+        <h5 class="card-title">${post.title}</h5>
+        <h6 class="card-subtitle mb-2 text-muted">${new Date(post.created_at).toLocaleDateString()}</h6>
+        <p class="card-text">${post.content}</p>
+      </div>
+    </div>
+  </div>
+`).join("");
+
 
       } catch (error) {
         postsDiv.innerHTML = `<div class="alert alert-danger">Hata: ${error.message}</div>`;
