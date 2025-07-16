@@ -2,3 +2,13 @@ body {
   font-family: Arial, sans-serif;
   background: #f0f0f0;
 }
+
+body#indexbody .card {
+  height: 300px; /* ihtiyacına göre ayarla */
+  overflow: hidden;
+}
+body#indexbody .card-text {
+  max-height: 150px;
+  overflow: hidden;
+}
+
