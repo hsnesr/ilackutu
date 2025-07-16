@@ -10,5 +10,14 @@
     <h1 class="text-center">👑 Admin Paneline Hoş Geldin!</h1>
     <p class="text-center">Burada sadece yetkililer işlem yapabilir.</p>
   </div>
+<script>
+  // Sayfa yüklendiğinde token kontrolü
+  const token = localStorage.getItem("token");
+  if (!token) {
+    alert("Lütfen önce giriş yapın.");
+    window.location.href = "login.html";
+  }
+</script>
+
 </body>
 </html>
