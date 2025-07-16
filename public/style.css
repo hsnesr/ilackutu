@@ -30,6 +30,9 @@ body#indexbody .card-text {
   text-overflow: ellipsis;
 }
 
-body#indexbody tbody#contentsTableBody button.btn, body#indexbody tbody#contentsTableBody button.btn{
+body#indexbody tbody#contentsTableBody tr td button.btn{
+  width: 150px;
+}
+body#indexbody tbody#contentsTableBody tr td button.btn{
   width: 150px;
 }
