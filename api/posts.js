@@ -15,14 +15,17 @@ export default async function handler(req, res) {
 
     const { data, error } = await supabase
       .from("posts")
-      .insert([{ title, content }]);
+          .insert([{ title, content }])
+      .select();
 
-    if (error) {
-      console.error("Supabase Hatası:", error);
-      return res.status(500).json({ error: "Veri eklenemedi." });
-    }
+      if (error) {
+          console.error("Supabase Hatası:", error);
+          return res.status(500).json({ error: "Veri eklenemedi." });
+      }
+      const newPost = (data && data.length > 0) ? data[0] : { title, content };
 
-    return res.status(201).json({ message: "İçerik kaydedildi.", post: data[0] });
+
+      return res.status(201).json({ message: "İçerik kaydedildi.", post: newPost });
   }
 
   // GET: Tüm içerikleri listeleme
