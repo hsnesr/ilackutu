@@ -22,6 +22,8 @@ if (!token) {
     });
 }
 
+let postToDeleteId = null; // 🌟 Silinecek postun id'si için global değişken
+
 // Çıkış yap butonu
 document.getElementById("logoutBtn").addEventListener("click", () => {
   localStorage.removeItem("token");
@@ -83,7 +85,6 @@ document.getElementById("cancelEditBtn").addEventListener("click", () => {
   new bootstrap.Tab(document.querySelector('#contents-tab')).show();
 });
 
-
 // İÇERİKLERİM SEKMESİ
 async function loadContents() {
   try {
@@ -142,37 +143,14 @@ async function loadContents() {
       });
     });
 
-    // Sil butonları
+    // 🔥 Silme modalı ile
     document.querySelectorAll(".delete-btn").forEach(button => {
-  button.addEventListener("click", async () => {
-    const id = button.getAttribute("data-id");
-
-    if (!confirm("Bu içeriği silmek istediğinize emin misiniz?")) return;
-
-    try {
-      const res = await fetch("/api/posts", {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ id })
+      button.addEventListener("click", () => {
+        postToDeleteId = button.getAttribute("data-id");
+        const deleteModal = new bootstrap.Modal(document.getElementById("deleteConfirmModal"));
+        deleteModal.show();
       });
-
-      const data = await res.json();
-
-      if (res.ok) {
-        alert("İçerik başarıyla silindi.");
-        loadContents(); // Listeyi yenile
-      } else {
-        alert("Silme işlemi başarısız: " + (data.error || "Bilinmeyen hata"));
-      }
-    } catch (err) {
-      console.error("Silme hatası:", err);
-      alert("Sunucu hatası.");
-    }
-  });
-});
-
+    });
 
   } catch (err) {
     console.error(err);
@@ -181,4 +159,33 @@ async function loadContents() {
 
 document.addEventListener("DOMContentLoaded", () => {
   loadContents();
+});
+
+// Silme onayı modal butonu
+document.getElementById("confirmDeleteBtn").addEventListener("click", async () => {
+  if (!postToDeleteId) return;
+
+  try {
+    const res = await fetch("/api/posts", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ id: postToDeleteId })
+    });
+
+    const data = await res.json();
+
+    if (res.ok) {
+      const modalInstance = bootstrap.Modal.getInstance(document.getElementById("deleteConfirmModal"));
+      modalInstance.hide();
+      postToDeleteId = null;
+      loadContents();
+    } else {
+      alert("Silme işlemi başarısız: " + (data.error || "Bilinmeyen hata"));
+    }
+  } catch (err) {
+    console.error("Silme hatası:", err);
+    alert("Sunucu hatası.");
+  }
 });
