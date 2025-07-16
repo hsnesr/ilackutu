@@ -3,6 +3,14 @@ body {
   background: #f0f0f0;
 }
 
+body#indexbody h5.card-title {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;        /* sadece 2 satır göster */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 body#indexbody .card {
   height: 300px; /* ihtiyacına göre ayarla */
   overflow: hidden;
@@ -17,4 +25,5 @@ body#indexbody .card-text {
 
 body#indexbody .card:hover {
   background: #eee;
+  transition: 300ms all;
 }
