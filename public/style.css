@@ -8,7 +8,10 @@ body#indexbody .card {
   overflow: hidden;
 }
 body#indexbody .card-text {
-  max-height: 150px;
+  display: -webkit-box;
+  -webkit-line-clamp: 5;        /* sadece 5 satır göster */
+  -webkit-box-orient: vertical;
   overflow: hidden;
+  text-overflow: ellipsis;
 }
 
