@@ -28,6 +28,28 @@ export default async function handler(req, res) {
       return res.status(201).json({ message: "İçerik kaydedildi.", post: newPost });
   }
 
+  // PUT: İçerik güncelleme
+else if (req.method === "PUT") {
+  const { id, title, content } = req.body;
+
+  if (!id || !title || !content) {
+    return res.status(400).json({ error: "ID, başlık ve içerik gerekli." });
+  }
+
+  const { data, error } = await supabase
+    .from("posts")
+    .update({ title, content })
+    .eq("id", id)
+    .select();
+
+  if (error) {
+    console.error("Supabase PUT Hatası:", error);
+    return res.status(500).json({ error: "İçerik güncellenemedi." });
+  }
+
+  return res.status(200).json({ message: "İçerik güncellendi.", post: data[0] });
+}
+
   // GET: Tüm içerikleri listeleme
   else if (req.method === "GET") {
     const { data, error } = await supabase
@@ -43,8 +65,11 @@ export default async function handler(req, res) {
     return res.status(200).json(data);
   }
 
+
+
+
   // Desteklenmeyen metod
   else {
-    return res.status(405).json({ error: "Yalnızca GET ve POST isteklerine izin verilir." });
-  }
+  return res.status(405).json({ error: "Yalnızca GET, POST ve PUT isteklerine izin verilir." });
+}
 }

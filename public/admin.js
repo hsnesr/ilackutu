@@ -34,6 +34,7 @@ document.getElementById("contentForm").addEventListener("submit", async (e) => {
 
   const title = document.getElementById("title").value.trim();
   const content = document.getElementById("contentText").value.trim();
+  const editId = document.getElementById("editId").value;
   const message = document.getElementById("message");
 
   if (!title || !content) {
@@ -42,19 +43,24 @@ document.getElementById("contentForm").addEventListener("submit", async (e) => {
   }
 
   try {
+    const method = editId ? "PUT" : "POST";
+    const bodyData = editId ? { id: editId, title, content } : { title, content };
+
     const res = await fetch("/api/posts", {
-      method: "POST",
+      method,
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({ title, content })
+      body: JSON.stringify(bodyData)
     });
 
     const data = await res.json();
 
     if (res.ok) {
-      message.innerHTML = `<div class="alert alert-success">"${data.post.title}" başlıklı içerik eklendi.</div>`;
+      message.innerHTML = `<div class="alert alert-success">${editId ? 'İçerik güncellendi.' : `"${data.post.title}" başlıklı içerik eklendi.`}</div>`;
       document.getElementById("contentForm").reset();
+      document.getElementById("editId").value = ""; // Güncelleme bittiyse sıfırla
+      loadContents(); // Listeyi yenile
     } else {
       message.innerHTML = `<div class="alert alert-danger">${data.error || 'Hata oluştu.'}</div>`;
     }
@@ -62,6 +68,7 @@ document.getElementById("contentForm").addEventListener("submit", async (e) => {
     message.innerHTML = `<div class="alert alert-danger">Sunucu hatası.</div>`;
   }
 });
+
 
 // İÇERİKLERİM SEKMESİ
 async function loadContents() {
@@ -81,13 +88,41 @@ async function loadContents() {
     contentsTableBody.innerHTML = "";
 
     data.forEach(post => {
-      const row = document.createElement("tr");
-      row.innerHTML = `
-        <td>${post.title}</td>
-        <td>${post.content}</td>
-      `;
-      contentsTableBody.appendChild(row);
-    });
+  const row = document.createElement("tr");
+  row.innerHTML = `
+    <td>${post.title}</td>
+    <td>
+      <div class="content-preview" style="max-width: 500px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+        ${post.content}
+      </div>
+    </td>
+    <td>
+      <button class="btn btn-sm btn-warning edit-btn" data-id="${post.id}" data-title="${post.title}" data-content="${post.content}">
+        Düzenle
+      </button>
+    </td>
+  `;
+  contentsTableBody.appendChild(row);
+});
+
+document.querySelectorAll(".edit-btn").forEach(button => {
+  button.addEventListener("click", () => {
+    const id = button.getAttribute("data-id");
+    const title = button.getAttribute("data-title");
+    const content = button.getAttribute("data-content");
+
+    // Form alanlarını doldur
+    document.getElementById("title").value = title;
+    document.getElementById("contentText").value = content;
+    document.getElementById("editId").value = id;
+
+    // "İçerik Ekle" sekmesine geç
+    new bootstrap.Tab(document.querySelector('#content-tab')).show();
+  });
+});
+
+
+
   } catch (err) {
     console.error(err);
     // İstersen kullanıcıya da hata mesajı göster

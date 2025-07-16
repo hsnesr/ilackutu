@@ -14,16 +14,18 @@ body#indexbody h5.card-title {
 body#indexbody .card {
   height: 300px; /* ihtiyacına göre ayarla */
   overflow: hidden;
+  transition: 300ms all;
 }
+
+
+body#indexbody .card:hover {
+  background: #eee;
+}
+
 body#indexbody .card-text {
   display: -webkit-box;
   -webkit-line-clamp: 5;        /* sadece 5 satır göster */
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
-}
-
-body#indexbody .card:hover {
-  background: #eee;
-  transition: 300ms all;
 }
