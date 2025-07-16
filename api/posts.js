@@ -1,47 +1,47 @@
-import fs from 'fs';
-import path from 'path';
+import { createClient } from "@supabase/supabase-js";
 import 'dotenv/config';
 
-const postsFile = path.join(process.cwd(), 'data', 'posts.json');
+// Supabase istemcisi
+const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
 
 export default async function handler(req, res) {
-  if (req.method === 'POST') {
+  // POST: Yeni içerik ekleme
+  if (req.method === "POST") {
     const { title, content } = req.body;
 
     if (!title || !content) {
-      return res.status(400).json({ error: 'Başlık ve içerik gerekli.' });
+      return res.status(400).json({ error: "Başlık ve içerik gerekli." });
     }
 
-    let posts = [];
+    const { data, error } = await supabase
+      .from("posts")
+      .insert([{ title, content }]);
 
-    try {
-      const fileData = fs.readFileSync(postsFile, 'utf8');
-      posts = JSON.parse(fileData);
-    } catch (err) {
-      posts = [];
+    if (error) {
+      console.error("Supabase Hatası:", error);
+      return res.status(500).json({ error: "Veri eklenemedi." });
     }
 
-    const newPost = {
-      id: Date.now(),
-      title,
-      content
-    };
-
-    posts.unshift(newPost);
-    fs.writeFileSync(postsFile, JSON.stringify(posts, null, 2));
-
-    return res.status(201).json({ message: 'İçerik kaydedildi.', post: newPost });
+    return res.status(201).json({ message: "İçerik kaydedildi.", post: data[0] });
   }
 
-  if (req.method === 'GET') {
-    try {
-      const fileData = fs.readFileSync(postsFile, 'utf8');
-      const posts = JSON.parse(fileData);
-      return res.status(200).json(posts);
-    } catch (err) {
-      return res.status(200).json([]);
+  // GET: Tüm içerikleri listeleme
+  else if (req.method === "GET") {
+    const { data, error } = await supabase
+      .from("posts")
+      .select("*")
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      console.error("Supabase GET Hatası:", error);
+      return res.status(500).json({ error: "Veriler alınamadı." });
     }
+
+    return res.status(200).json(data);
   }
 
-  return res.status(405).json({ error: 'Yalnızca GET ve POST isteklerine izin verilir.' });
+  // Desteklenmeyen metod
+  else {
+    return res.status(405).json({ error: "Yalnızca GET ve POST isteklerine izin verilir." });
+  }
 }
