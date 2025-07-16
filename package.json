@@ -1,8 +1,9 @@
 {
   "name": "aq",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "api/index.js",
   "scripts": {
+    "start": "vercel dev",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -12,6 +13,8 @@
   "dependencies": {
     "@supabase/supabase-js": "^2.51.0",
     "dotenv": "^17.2.0",
-    "jsonwebtoken": "^9.0.2"
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "serverless-http": "^3.2.0"
   }
 }
