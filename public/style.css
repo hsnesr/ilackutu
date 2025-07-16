@@ -31,7 +31,10 @@ body#indexbody .card-text {
 }
 
 body#adminbody #contentsTableBody tr td{
-  -webkit-line-clamp: 1;        /* sadece 2 satır göster */
-  overflow: hidden;
-  text-overflow: ellipsis;
+  display: -webkit-box;          /* Çok satırlı kesme için gerekli */
+  -webkit-line-clamp: 1;         /* Görüntülenecek satır sayısı */
+  -webkit-box-orient: vertical;  /* Kutunun yönü dikey */
+  overflow: hidden;              /* Taşanı gizle */
+  text-overflow: ellipsis;       /* Taşan metni ... olarak göster */
+  white-space: normal;           /* Metni normal akışta tut */
 }
