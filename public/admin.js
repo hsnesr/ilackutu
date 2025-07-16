@@ -33,7 +33,7 @@ document.getElementById("contentForm").addEventListener("submit", async (e) => {
   e.preventDefault();
 
   const title = document.getElementById("title").value.trim();
-  const content = document.getElementById("content").value.trim();
+  const content = document.getElementById("contentText").value.trim();
   const message = document.getElementById("message");
 
   if (!title || !content) {
