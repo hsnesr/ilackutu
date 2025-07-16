@@ -62,3 +62,39 @@ document.getElementById("contentForm").addEventListener("submit", async (e) => {
     message.innerHTML = `<div class="alert alert-danger">Sunucu hatası.</div>`;
   }
 });
+
+// Supabase ile içerikleri çekip "İçeriklerim" tablosunu güncelleyen fonksiyon
+async function loadContents() {
+  try {
+    const res = await fetch("/api/posts", {
+      method: "GET",
+      headers: {
+        "Authorization": `Bearer ${token}` // gerekiyorsa token ekle
+      }
+    });
+
+    if (!res.ok) throw new Error("Veri çekilemedi");
+
+    const data = await res.json();
+
+    const contentsTableBody = document.getElementById("contentsTableBody");
+    contentsTableBody.innerHTML = "";
+
+    data.posts.forEach(post => {
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td>${post.title}</td>
+        <td>${post.content}</td>
+      `;
+      contentsTableBody.appendChild(row);
+    });
+  } catch (err) {
+    console.error(err);
+    // Hata mesajı gösterebilirsin
+  }
+}
+
+// Sayfa yüklendiğinde içerikleri getir
+document.addEventListener("DOMContentLoaded", () => {
+  loadContents();
+});
