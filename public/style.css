@@ -29,13 +29,3 @@ body#indexbody .card-text {
   overflow: hidden;
   text-overflow: ellipsis;
 }
-
-body#indexbody table #contentsTableBody td {
-  max-width: 300px;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  height: 90px;
-}
