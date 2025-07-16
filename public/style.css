@@ -29,3 +29,7 @@ body#indexbody .card-text {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+body#indexbody tbody#contentsTableBody tr td button{
+  width: 150px;
+}
