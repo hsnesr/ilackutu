@@ -112,7 +112,7 @@ async function loadContents() {
     </div>
   </td>
   <td>
-    <button class="btn btn-sm btn-warning edit-btn mb-2" style="width: 150px" data-id="${post.id}" data-title="${post.title}" data-content="${post.content}">
+    <button class="btn btn-sm btn-primary edit-btn mb-2" style="width: 150px" data-id="${post.id}" data-title="${post.title}" data-content="${post.content}">
       Düzenle
     </button>
     <button class="btn btn-sm btn-danger delete-btn" style="width: 150px" data-id="${post.id}">
