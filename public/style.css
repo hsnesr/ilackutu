@@ -30,7 +30,7 @@ body#indexbody .card-text {
   text-overflow: ellipsis;
 }
 
-body#adminbody div#contents tbody#contentsTableBody tr td{
+body#adminbody #contentsTableBody tr td{
   -webkit-line-clamp: 1;        /* sadece 2 satır göster */
   overflow: hidden;
   text-overflow: ellipsis;
