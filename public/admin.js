@@ -104,18 +104,22 @@ async function loadContents() {
     data.forEach(post => {
       const row = document.createElement("tr");
       row.innerHTML = `
-        <td>${post.title}</td>
-        <td>
-          <div class="content-preview" style="max-width: 500px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-            ${post.content}
-          </div>
-        </td>
-        <td>
-          <button class="btn btn-sm btn-warning edit-btn" data-id="${post.id}" data-title="${post.title}" data-content="${post.content}">
-            Düzenle
-          </button>
-        </td>
-      `;
+  <td>${post.title}</td>
+  <td>
+    <div class="content-preview" style="max-width: 500px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+      ${post.content}
+    </div>
+  </td>
+  <td>
+    <button class="btn btn-sm btn-warning edit-btn" data-id="${post.id}" data-title="${post.title}" data-content="${post.content}">
+      Düzenle
+    </button>
+    <button class="btn btn-sm btn-danger delete-btn ms-2" data-id="${post.id}">
+      Sil
+    </button>
+  </td>
+`;
+
       contentsTableBody.appendChild(row);
     });
 
@@ -137,6 +141,38 @@ async function loadContents() {
         new bootstrap.Tab(document.querySelector('#content-tab')).show();
       });
     });
+
+    // Sil butonları
+    document.querySelectorAll(".delete-btn").forEach(button => {
+  button.addEventListener("click", async () => {
+    const id = button.getAttribute("data-id");
+
+    if (!confirm("Bu içeriği silmek istediğinize emin misiniz?")) return;
+
+    try {
+      const res = await fetch("/api/posts", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ id })
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        alert("İçerik başarıyla silindi.");
+        loadContents(); // Listeyi yenile
+      } else {
+        alert("Silme işlemi başarısız: " + (data.error || "Bilinmeyen hata"));
+      }
+    } catch (err) {
+      console.error("Silme hatası:", err);
+      alert("Sunucu hatası.");
+    }
+  });
+});
+
 
   } catch (err) {
     console.error(err);

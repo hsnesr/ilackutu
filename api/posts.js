@@ -65,6 +65,26 @@ else if (req.method === "PUT") {
     return res.status(200).json(data);
   }
 
+// DELETE: İçerik silme
+else if (req.method === "DELETE") {
+  const { id } = req.body;
+
+  if (!id) {
+    return res.status(400).json({ error: "ID gerekli." });
+  }
+
+  const { error } = await supabase
+    .from("posts")
+    .delete()
+    .eq("id", id);
+
+  if (error) {
+    console.error("Supabase DELETE Hatası:", error);
+    return res.status(500).json({ error: "İçerik silinemedi." });
+  }
+
+  return res.status(200).json({ message: "İçerik silindi." });
+}
 
 
 
