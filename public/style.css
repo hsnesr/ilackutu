@@ -15,3 +15,6 @@ body#indexbody .card-text {
   text-overflow: ellipsis;
 }
 
+body#indexbody .card:hover {
+  background: #eee;
+}
