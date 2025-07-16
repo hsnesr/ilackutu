@@ -63,13 +63,13 @@ document.getElementById("contentForm").addEventListener("submit", async (e) => {
   }
 });
 
-// Supabase ile içerikleri çekip "İçeriklerim" tablosunu güncelleyen fonksiyon
+// İÇERİKLERİM SEKMESİ
 async function loadContents() {
   try {
     const res = await fetch("/api/posts", {
       method: "GET",
       headers: {
-        "Authorization": `Bearer ${token}` // gerekiyorsa token ekle
+        "Authorization": `Bearer ${token}` // Eğer token ile doğrulama yapılıyorsa
       }
     });
 
@@ -80,7 +80,7 @@ async function loadContents() {
     const contentsTableBody = document.getElementById("contentsTableBody");
     contentsTableBody.innerHTML = "";
 
-    data.posts.forEach(post => {
+    data.forEach(post => {
       const row = document.createElement("tr");
       row.innerHTML = `
         <td>${post.title}</td>
@@ -90,11 +90,10 @@ async function loadContents() {
     });
   } catch (err) {
     console.error(err);
-    // Hata mesajı gösterebilirsin
+    // İstersen kullanıcıya da hata mesajı göster
   }
 }
 
-// Sayfa yüklendiğinde içerikleri getir
 document.addEventListener("DOMContentLoaded", () => {
   loadContents();
 });
