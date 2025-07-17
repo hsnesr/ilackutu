@@ -67,6 +67,7 @@ export default async function handler(req, res) {
 
     // GET: Tüm içerikler
     else if (req.method === "GET") {
+        console.log("GET istek alındı");
         const { data, error } = await supabase
             .from("posts")
             .select("*")
