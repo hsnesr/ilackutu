@@ -1,3 +1,8 @@
+* {
+    margin:0;
+    padding: 0;
+}
+
 body {
   font-family: Arial, sans-serif;
   background: #f0f0f0;
@@ -16,22 +21,25 @@ body#indexbody h5.card-title {
 }
 
 body#indexbody .card {
-  height: 300px; 
-  overflow: hidden;
-  transition: 300ms all;
+height: 300px;
+overflow: hidden;
+transition: 300ms all;
+box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+border: none;
 }
 
 
 body#indexbody .card:hover {
-  background: #eee;
+  background: #F0F0F0;
 }
 
+
 body#indexbody .card-text {
-  display: -webkit-box;
-  -webkit-line-clamp: 5;       
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 #progressBar {
