@@ -48,13 +48,17 @@ document.getElementById("contentForm").addEventListener("submit", async (e) => {
     const method = editId ? "PUT" : "POST";
     const bodyData = editId ? { id: editId, title, content } : { title, content };
 
-    const res = await fetch("/api/posts", {
-      method,
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(bodyData)
-    });
+      const formData = new FormData();
+      formData.append("title", title);
+      formData.append("content", content);
+      if (editId) formData.append("id", editId);
+      selectedFiles.forEach(file => formData.append("media", file));
+
+      const res = await fetch("/api/posts", {
+          method,
+          body: formData
+      });
+
 
     const data = await res.json();
 
@@ -188,4 +192,38 @@ document.getElementById("confirmDeleteBtn").addEventListener("click", async () =
     console.error("Silme hatası:", err);
     alert("Sunucu hatası.");
   }
+});
+
+//MEDİA
+
+const mediaBtn = document.getElementById("mediaBtn");
+const mediaInput = document.getElementById("mediaInput");
+const mediaPreview = document.getElementById("mediaPreview");
+let selectedFiles = [];
+
+mediaBtn.addEventListener("click", () => {
+    mediaInput.click();
+});
+
+
+mediaInput.addEventListener("change", () => {
+    selectedFiles = Array.from(mediaInput.files);
+    mediaPreview.innerHTML = "";
+
+    selectedFiles.forEach(file => {
+        const url = URL.createObjectURL(file);
+        const isImage = file.type.startsWith("image");
+        const isVideo = file.type.startsWith("video");
+
+        const wrapper = document.createElement("div");
+        wrapper.style.width = "120px";
+
+        if (isImage) {
+            wrapper.innerHTML = `<img src="${url}" class="img-fluid rounded border" style="max-height: 100px;" />`;
+        } else if (isVideo) {
+            wrapper.innerHTML = `<video src="${url}" class="img-fluid rounded border" style="max-height: 100px;" muted></video>`;
+        }
+
+        mediaPreview.appendChild(wrapper);
+    });
 });
