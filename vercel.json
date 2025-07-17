@@ -8,5 +8,13 @@
       "source": "/post/:slug",
       "destination": "/post.html?slug=:slug"
     }
-  ]
+  ],
+  "functions": {
+    "api/**/*.js": {
+      "runtime": "nodejs"
+    },
+    "server/**/*.js": {
+      "runtime": "nodejs"
+    }
+  }
 }
