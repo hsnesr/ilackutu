@@ -62,8 +62,9 @@
                 try {
                     const { data, error } = await supabase
                         .from("posts")
-                        .insert([{ title, content, media_url }])
-                        .select();
+                        .select("*")
+                        .eq("slug", slugParam)
+                        .single();
 
                     if (error) {
                         console.error("🧨 Supabase veri ekleme hatası:", error);
