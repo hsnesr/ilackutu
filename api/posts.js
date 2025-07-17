@@ -14,23 +14,26 @@ const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY
 
 export default async function handler(req, res) {
     if (req.method === "POST") {
-        try {
-            const form = new IncomingForm({ keepExtensions: true });
+        const form = new IncomingForm({ keepExtensions: true });
 
-            form.parse(req, async (err, fields, files) => {
-                if (err) return res.status(400).json({ error: "Form verisi ayrıştırılamadı." });
+        form.parse(req, async (err, fields, files) => {
+            if (err) {
+                console.error("🧨 Form ayrıştırma hatası:", err);
+                return res.status(400).json({ error: "Form verisi ayrıştırılamadı." });
+            }
 
-                const title = fields.title?.[0] || fields.title;
-                const content = fields.content?.[0] || fields.content;
-                const mediaFile = files.media?.[0] || files.media;
+            const title = fields.title?.[0] || fields.title;
+            const content = fields.content?.[0] || fields.content;
+            const mediaFile = files.media?.[0] || files.media;
 
-                if (!title || !content) {
-                    return res.status(400).json({ error: "Başlık ve içerik gerekli." });
-                }
+            if (!title || !content) {
+                return res.status(400).json({ error: "Başlık ve içerik gerekli." });
+            }
 
-                let media_url = null;
+            let media_url = null;
 
-                if (mediaFile) {
+            if (mediaFile) {
+                try {
                     const ext = path.extname(mediaFile.originalFilename);
                     const fileName = `media_${Date.now()}${ext}`;
 
@@ -47,8 +50,13 @@ export default async function handler(req, res) {
 
                     const { data: publicURL } = supabase.storage.from("media").getPublicUrl(fileName);
                     media_url = publicURL.publicUrl;
+                } catch (uploadException) {
+                    console.error("🧨 Dosya yükleme sırasında beklenmeyen hata:", uploadException);
+                    return res.status(500).json({ error: "Medya yükleme hatası." });
                 }
+            }
 
+            try {
                 const { data, error } = await supabase
                     .from("posts")
                     .insert([{ title, content, media_url }])
@@ -60,11 +68,11 @@ export default async function handler(req, res) {
                 }
 
                 return res.status(201).json({ message: "İçerik kaydedildi.", post: data[0] });
-            });
-        } catch (err) {
-            console.error("🔥 POST işlemi sırasında beklenmeyen hata:", err);
-            return res.status(500).json({ error: "Sunucu hatası oluştu." });
-        }
+            } catch (dbException) {
+                console.error("🧨 Veritabanı işlemi sırasında hata:", dbException);
+                return res.status(500).json({ error: "Sunucu hatası oluştu." });
+            }
+        });
     }
 
     else if (req.method === "GET") {
