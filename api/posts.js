@@ -103,10 +103,18 @@
 
         else if (req.method === "GET") {
             try {
+                // Query parametrelerini alıyoruz
+                const url = new URL(req.url, `http://${req.headers.host}`);
+                const page = parseInt(url.searchParams.get("page")) || 1;
+                const limit = parseInt(url.searchParams.get("limit")) || 6;
+                const from = (page - 1) * limit;
+                const to = from + limit - 1;
+
                 const { data, error } = await supabase
                     .from("posts")
                     .select("*")
-                    .order("created_at", { ascending: false });
+                    .order("created_at", { ascending: false })
+                    .range(from, to);
 
                 if (error) {
                     console.error("🧨 Supabase GET hatası:", error);
@@ -119,6 +127,7 @@
                 return res.status(500).json({ error: "Sunucu hatası oluştu." });
             }
         }
+
 
         else if (req.method === "DELETE") {
             try {
