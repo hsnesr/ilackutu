@@ -1,12 +1,17 @@
+const postsDiv = document.getElementById("posts");
+const paginationUl = document.getElementById("pagination");
 
-        let currentPage = 1;
-        const limit = 9;
+let currentPage = 1;
+const limit = 9;
 
 function slugify(text) {
     const trMap = {
-        "ç": "c", "Ç": "C", "ð": "g", "Ð": "G",
-        "ý": "i", "Ý": "I", "ö": "o", "Ö": "O",
-        "þ": "s", "Þ": "S", "ü": "u", "Ü": "U"
+        "Ã§": "c", "Ã‡": "C",
+        "ÄŸ": "g", "Äž": "G",
+        "Ä±": "i", "Ä°": "I",
+        "Ã¶": "o", "Ã–": "O",
+        "ÅŸ": "s", "Åž": "S",
+        "Ã¼": "u", "Ãœ": "U"
     };
     return text
         .split("")
@@ -19,87 +24,173 @@ function slugify(text) {
         .replace(/^\-+|\-+$/g, "");
 }
 
-        //PROGRES BARS
-        function showProgressBar() {
-            const bar = document.getElementById("progressBar");
-            bar.style.width = "0%";
-            bar.style.display = "block";
+// PROGRESS BARS
+function showProgressBar() {
+    const bar = document.getElementById("progressBar");
+    if (!bar) return;
+    bar.style.width = "0%";
+    bar.style.display = "block";
 
-            let width = 0;
-            const interval = setInterval(() => {
-                if (width >= 90) {
-                    clearInterval(interval);
-                } else {
-                    width += Math.random() * 10;
-                    bar.style.width = width + "%";
-                }
-            }, 100);
+    let width = 0;
+    const interval = setInterval(() => {
+        if (width >= 90) {
+            clearInterval(interval);
+        } else {
+            width += Math.random() * 10;
+            bar.style.width = width + "%";
         }
-        function hideProgressBar() {
-            const bar = document.getElementById("progressBar");
-            bar.style.width = "100%";
-            setTimeout(() => {
-                bar.style.display = "none";
-                bar.style.width = "0%";
-            }, 300);
-        }
+    }, 100);
+}
 
+function hideProgressBar() {
+    const bar = document.getElementById("progressBar");
+    if (!bar) return;
+    bar.style.width = "100%";
+    setTimeout(() => {
+        bar.style.display = "none";
+        bar.style.width = "0%";
+    }, 300);
+}
 
+// POSTS
+async function loadPosts(page = 1, search = "", limitParam) {
+    currentPage = page;
+    showProgressBar();
 
+    const usedLimit = limitParam || limit;
 
-        // POSTS
-        async function loadPosts(page = 1) {
-            currentPage = page;
-            const postsDiv = document.getElementById("posts");
-            const paginationUl = document.getElementById("pagination");
+    try {
+        const query = new URLSearchParams({ page, limit: usedLimit });
+        if (search) query.append("search", search);
 
-            showProgressBar(); // Ekle 1
+        const res = await fetch(`/api/posts?${query.toString()}`);
+        if (!res.ok) throw new Error("Veriler alÄ±namadÄ±.");
 
-            try {
-                const res = await fetch(`/api/posts?page=${page}&limit=${limit}`);
-                if (!res.ok) throw new Error("Veriler alýnamadý.");
+        const posts = await res.json();
 
-                const posts = await res.json();
-
-                if (posts.length === 0) {
-                    postsDiv.innerHTML = '<div class="alert alert-info">Henüz içerik yok.</div>';
-                    paginationUl.innerHTML = "";
-                    hideProgressBar(); // Ekle 2
-                    return;
-                }
-
-                postsDiv.innerHTML = posts.map((post, index) => {
-                    const slug = slugify(post.title);
-                    return `
-                            <div class="col-md-6 col-lg-4">
-                                <a href="/post/${slug}" class="text-decoration-none text-dark">
-                                    <div class="card h-100">
-                                        <div class="card-body">
-                                            <h5 class="card-title">${post.title}</h5>
-                                            <h6 class="card-subtitle mb-2 text-muted">${new Date(post.created_at).toLocaleDateString()}</h6>
-                                            <p class="card-text">${post.content}</p>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                        `;
-                }).join("");
-
-                // Basit sayfa kontrolü: Eðer çekilen post sayýsý limitten azsa son sayfa
-                paginationUl.innerHTML = `
-                        <li class="page-item ${page === 1 ? "disabled" : ""}">
-                            <a class="page-link" href="#" onclick="loadPosts(${page - 1});return false;">Önceki</a>
-                        </li>
-                        <li class="page-item ${posts.length < limit ? "disabled" : ""}" >
-    <a class="page-link" href="#" onclick="loadPosts(${page + 1});return false;">Sonraki</a>
-                        </li >
-    `;
-
-            } catch (error) {
-                postsDiv.innerHTML = `< div class="alert alert-danger" > Hata: ${ error.message }</div > `;
-            } finally {
-                hideProgressBar(); // Ekle 3
-            }
+        if (posts.length === 0) {
+            postsDiv.innerHTML = '<div class="alert alert-info">Ä°Ã§erik bulunamadÄ±.</div>';
+            paginationUl.innerHTML = "";
+            return;
         }
 
-        loadPosts(currentPage);
+        postsDiv.innerHTML = posts.map(post => {
+            const slug = slugify(post.title);
+            return `
+            <div class="col-md-6 col-lg-4">
+                <a href="/post/${slug}" class="text-decoration-none text-dark">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">${post.title}</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">${new Date(post.created_at).toLocaleDateString()}</h6>
+                            <p class="card-text">${post.content}</p>
+                        </div>
+                    </div>
+                </a>
+            </div>`;
+        }).join("");
+
+        if (!search) {
+            paginationUl.innerHTML = `
+                <li class="page-item ${page === 1 ? "disabled" : ""}">
+                    <a class="page-link" href="#" onclick="loadPosts(${page - 1});return false;">Ã–nceki</a>
+                </li>
+                <li class="page-item ${posts.length < usedLimit ? "disabled" : ""}">
+                    <a class="page-link" href="#" onclick="loadPosts(${page + 1});return false;">Sonraki</a>
+                </li>`;
+        } else {
+            paginationUl.innerHTML = "";
+        }
+
+    } catch (error) {
+        postsDiv.innerHTML = `<div class="alert alert-danger">Hata: ${error.message}</div>`;
+    } finally {
+        hideProgressBar();
+    }
+}
+
+// SUGGESTIONS
+async function loadSuggestions(query = "") {
+    const suggestionList = document.getElementById("suggestionList");
+    if (!suggestionList) return;
+
+    const params = new URLSearchParams();
+    params.append("page", 1);
+    params.append("limit", 6);
+    if (query) params.append("search", query);
+
+    try {
+        const res = await fetch(`/api/posts?${params.toString()}`);
+        if (!res.ok) throw new Error("Ã–neriler alÄ±namadÄ±.");
+
+        const posts = await res.json();
+
+        if (posts.length === 0) {
+            suggestionList.style.display = "none";
+            suggestionList.innerHTML = "";
+            return;
+        }
+
+        suggestionList.innerHTML = posts.map(post =>
+            `<li class="list-group-item list-group-item-action" style="cursor:pointer;" data-title="${post.title}">${post.title}</li>`
+        ).join("");
+
+        suggestionList.style.display = "block";
+    } catch (err) {
+        suggestionList.style.display = "none";
+        suggestionList.innerHTML = "";
+        console.error(err);
+    }
+}
+
+// SEARCH EVENTS
+function initSearchEvents() {
+    const searchForm = document.getElementById("searchForm");
+    const searchInput = document.getElementById("searchInput");
+    const suggestionList = document.getElementById("suggestionList");
+
+    if (!searchForm || !searchInput || !suggestionList) return;
+
+    searchInput.addEventListener("focus", () => {
+        if (!searchInput.value.trim()) {
+            loadSuggestions();
+            loadPosts(1, "", 6);
+        }
+    });
+
+    searchInput.addEventListener("input", () => {
+        const val = searchInput.value.trim();
+        if (val) {
+            loadSuggestions(val);
+        } else {
+            loadSuggestions();
+        }
+    });
+
+    suggestionList.addEventListener("click", e => {
+        if (e.target && e.target.matches("li.list-group-item")) {
+            const selectedTitle = e.target.getAttribute("data-title");
+            searchInput.value = selectedTitle;
+            suggestionList.style.display = "none";
+            loadPosts(1, selectedTitle);
+        }
+    });
+
+    searchForm.addEventListener("submit", e => {
+        e.preventDefault();
+        const query = searchInput.value.trim();
+        loadPosts(1, query);
+        suggestionList.style.display = "none";
+    });
+
+    document.addEventListener("click", (e) => {
+        if (!searchForm.contains(e.target)) {
+            suggestionList.style.display = "none";
+        }
+    });
+}
+
+// BaÅŸlangÄ±Ã§ verileri
+document.addEventListener("DOMContentLoaded", () => {
+    loadPosts(currentPage);
+});
