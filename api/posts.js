@@ -65,7 +65,7 @@ export default async function handler(req, res) {
         });
     }
 
-    // Diğer metodlar (PUT, GET, DELETE) aynı kalabilir.
+    // GET: Tüm içerikler
     else if (req.method === "GET") {
         const { data, error } = await supabase
             .from("posts")
@@ -80,6 +80,7 @@ export default async function handler(req, res) {
         return res.status(200).json(data);
     }
 
+    // DELETE: İçerik silme
     else if (req.method === "DELETE") {
         const { id } = req.body;
 
@@ -95,6 +96,7 @@ export default async function handler(req, res) {
         return res.status(200).json({ message: "İçerik silindi." });
     }
 
+    // Desteklenmeyen metodlar
     else {
         return res.status(405).json({ error: "Desteklenmeyen istek." });
     }
