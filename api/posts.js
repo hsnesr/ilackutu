@@ -43,6 +43,10 @@
                             .from("media")
                             .upload(fileName, fileBuffer, {
                                 contentType: mediaFile.mimetype,
+                                // fetch options ekle
+                                upsert: false, // veya true, ihtiyacına göre
+                                // Supabase SDK fetch opsiyonlarını doğrudan desteklemiyorsa aşağıdaki gibi fetch parametresi ekle
+                                fetch: (url, options) => fetch(url, { ...options, duplex: "half" }),
                             });
 
                         if (uploadError) {
