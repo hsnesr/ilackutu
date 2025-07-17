@@ -20,7 +20,61 @@
     </main>
 
 
-    <script src="postmain.js" type="text/javascript"></script>
+    <script>
+        // Türkçe karakterleri URL uyumlu hale getirir
+        function slugify(text) {
+            const trMap = {
+                ç: "c", ğ: "g", ı: "i", ö: "o", ş: "s", ü: "u",
+                Ç: "C", Ğ: "G", İ: "I", Ö: "O", Ş: "S", Ü: "U"
+            };
+            return text.split("")
+                .map(c => trMap[c] || c)
+                .join("")
+                .toLowerCase()
+                .replace(/\s+/g, "-")
+                .replace(/[^a-z0-9\-]/g, "")
+                .replace(/\-+/g, "-");
+        }
+
+        async function loadPost() {
+            const pathParts = window.location.pathname.split("/");
+            // /post/slug --> slug index 2'de
+            const slug = pathParts[2];
+            const container = document.getElementById("postDetail");
+
+
+
+            if (!slug) {
+                container.innerHTML = '<div class="alert alert-danger">İçerik bulunamadı.</div>';
+                return;
+            }
+
+            try {
+                const res = await fetch("/api/posts");
+                if (!res.ok) throw new Error("Veriler alınamadı.");
+
+                const posts = await res.json();
+
+                const matchedPost = posts.find(p => slugify(p.title) === slug);
+
+                if (matchedPost) {
+                    document.title = matchedPost.title + " | hsnesr";
+                    container.innerHTML = `
+                    <h2>${matchedPost.title}</h2>
+                    <p class="text-muted">${new Date(matchedPost.created_at).toLocaleDateString()}</p>
+                    <p>${matchedPost.content}</p>
+                  `;
+                } else {
+                    container.innerHTML = '<div class="alert alert-danger">İçerik bulunamadı.</div>';
+                }
+            } catch (err) {
+                container.innerHTML = '<div class="alert alert-danger">Sunucu hatası.</div>';
+            }
+        }
+
+        loadPost();
+
+    </script>
 
 </body>
 </html>
