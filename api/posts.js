@@ -36,10 +36,12 @@
                     try {
                         const ext = path.extname(mediaFile.originalFilename);
                         const fileName = `media_${Date.now()}${ext}`;
+                        // Dosyayı buffer olarak oku
+                        const fileBuffer = fs.readFileSync(mediaFile.filepath);
 
                         const { data: uploadData, error: uploadError } = await supabase.storage
                             .from("media")
-                            .upload(fileName, fs.createReadStream(mediaFile.filepath), {
+                            .upload(fileName, fileBuffer, {
                                 contentType: mediaFile.mimetype,
                             });
 
