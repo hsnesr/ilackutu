@@ -36,17 +36,14 @@
                     try {
                         const ext = path.extname(mediaFile.originalFilename);
                         const fileName = `media_${Date.now()}${ext}`;
-                        // Dosyayı buffer olarak oku
                         const fileBuffer = fs.readFileSync(mediaFile.filepath);
 
+                        // Supabase Storage'a upload ederken fetch override ile duplex: "half" ekle
                         const { data: uploadData, error: uploadError } = await supabase.storage
                             .from("media")
                             .upload(fileName, fileBuffer, {
                                 contentType: mediaFile.mimetype,
-                                // fetch options ekle
-                                upsert: false, // veya true, ihtiyacına göre
-                                // Supabase SDK fetch opsiyonlarını doğrudan desteklemiyorsa aşağıdaki gibi fetch parametresi ekle
-                                fetch: (url, options) => fetch(url, { ...options, duplex: "half" }),
+                                fetch: (url, options) => fetch(url, { ...options, duplex: "half" })
                             });
 
                         if (uploadError) {
