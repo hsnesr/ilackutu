@@ -41,9 +41,10 @@
     <header id="header-placeholder"></header>
 
     <!-- Blog Gönderileri -->
+
     <main class="container my-5">
         <div id="postDetail" class="text-center card shadow-sm border-0 text-dark">
-
+            <div id="media-container"></div>
 
             <div class="blue-loader"></div>
 
@@ -78,6 +79,7 @@
             const slug = pathParts[1]; // Örn: /yazi-slug
 
             const container = document.getElementById("postDetail");
+            const mediaContainer = document.getElementById("media-container");
 
             if (!slug) {
                 container.innerHTML = '<div class="alert alert-danger">İçerik bulunamadı.</div>';
@@ -94,12 +96,26 @@
                 container.innerHTML = `
             <h2>${post.title}</h2>
             <p class="text-muted">${new Date(post.created_at).toLocaleDateString()}</p>
+            ${post.media_url ? `<img src="${post.media_url}" alt="Post image" style="max-width:100%;margin-top:1rem;border-radius:12px;" />` : ""}
             <p>${post.content}</p>
         `;
+
+                // 🌟 MEDYA URL varsa resmi göster
+                if (post.media_url) {
+                    const img = document.createElement("img");
+                    img.src = post.media_url;
+                    img.alt = "Post image";
+                    img.style.maxWidth = "100%";
+                    img.style.marginTop = "1rem";
+                    img.style.borderRadius = "12px";
+                    mediaContainer.appendChild(img);
+                }
+
             } catch (err) {
                 container.innerHTML = '<div class="alert alert-danger">İçerik bulunamadı.</div>';
             }
         }
+
 
 
         loadPost();
