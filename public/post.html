@@ -13,36 +13,49 @@
         #postDetail h2 {text-align: left;padding: 15px;}
         #postDetail p.text-muted {background: #f3f3f3; border-radius: 4px;}
         #postDetail p.text-muted:after {content: " Tarihinde Yazıldı."}
+        .blue-loader {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: conic-gradient(from 0deg, rgba(13, 110, 253, 1), rgba(13, 110, 253, 0.2), rgba(13, 110, 253, 0) );
+            animation: rotate 1s linear infinite;
+            /* Daire ortasını daha çok keserek çizgiyi inceltiyoruz: */
+            mask: radial-gradient(farthest-side, transparent 75%, black 76%);
+            -webkit-mask: radial-gradient(farthest-side, transparent 75%, black 76%);
+            margin: 100px auto;
+        }
+
+        @keyframes rotate {
+            100% {
+                transform: rotate(-360deg);
+            }
+        }
     </style>
 </head>
 <body id="postbody" class="bg-light">
-<div id="progressBar" style="position:fixed;top:0;left:0;height:4px;background:#0d6efd;width:0;display:none;z-index:9999;"></div>
+    <div id="progressBar" style="position:fixed;top:0;left:0;height:4px;background:#0d6efd;width:0;display:none;z-index:9999;"></div>
+    <!-- Navbar -->
+    <div id="navbar-placeholder"></div>
 
-    
+    <!-- Header -->
+    <header id="header-placeholder"></header>
 
-     <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="javascript:history.back()">Geri Dön</a>
-
-    <button class="navbar-toggler mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarNavDropdown">
-
-      <!-- Arama Kutusu (İsteğe Bağlı) -->
-      <form class="d-flex ms-auto" style="width:100%">
-        <input class="form-control me-2" type="search" placeholder="Ara...">
-        <button class="btn btn-primary" style="width:150px" type="submit"><i class="fas fa-search"></i></button>
-      </form>
-    </div>
-  </div>
-</nav>
-
+    <!-- Blog Gönderileri -->
     <main class="container my-5">
-        <div id="postDetail" class="text-center card shadow-sm border-0 text-dark">Yükleniyor...</div>
+        <div id="postDetail" class="text-center card shadow-sm border-0 text-dark">
+
+
+            <div class="blue-loader"></div>
+
+
+
+        </div>
     </main>
 
+    <!-- Footer -->
+    <div id="footer-placeholder"></div>
+    <script src="/common.js"></script>
+    <script src="/script.js"></script>
 
     <script>
         // Türkçe karakterleri URL uyumlu hale getirir
@@ -61,12 +74,10 @@
         }
 
         async function loadPost() {
-            const pathParts = window.location.pathname.split("/");
-            // /post/slug --> slug index 2'de
-            const slug = pathParts[2];
+            const pathParts = window.location.pathname.split("/").filter(Boolean);
+            const slug = pathParts[1]; // Örn: /yazi-slug
+
             const container = document.getElementById("postDetail");
-
-
 
             if (!slug) {
                 container.innerHTML = '<div class="alert alert-danger">İçerik bulunamadı.</div>';
@@ -74,31 +85,26 @@
             }
 
             try {
-                const res = await fetch("/api/posts");
-                if (!res.ok) throw new Error("Veriler alınamadı.");
+                const res = await fetch(`/api/posts?slug=${encodeURIComponent(slug)}`);
+                if (!res.ok) throw new Error("Veri alınamadı");
 
-                const posts = await res.json();
+                const post = await res.json();
 
-                const matchedPost = posts.find(p => slugify(p.title) === slug);
-
-                if (matchedPost) {
-                    document.title = matchedPost.title + " | hsnesr";
-                    container.innerHTML = `
-                    <h2>${matchedPost.title}</h2>
-                    <p class="text-muted">${new Date(matchedPost.created_at).toLocaleDateString()}</p>
-                    <p>${matchedPost.content}</p>
-                  `;
-                } else {
-                    container.innerHTML = '<div class="alert alert-danger">İçerik bulunamadı.</div>';
-                }
+                document.title = post.title + " | hsnesr";
+                container.innerHTML = `
+            <h2>${post.title}</h2>
+            <p class="text-muted">${new Date(post.created_at).toLocaleDateString()}</p>
+            <p>${post.content}</p>
+        `;
             } catch (err) {
-                container.innerHTML = '<div class="alert alert-danger">Sunucu hatası.</div>';
+                container.innerHTML = '<div class="alert alert-danger">İçerik bulunamadı.</div>';
             }
         }
+
 
         loadPost();
 
     </script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

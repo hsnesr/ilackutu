@@ -12,6 +12,22 @@ export const config = {
 
 const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
 
+// Slug oluşturma fonksiyonu
+function createSlug(text) {
+    const trMap = {
+        ç: "c", ğ: "g", ı: "i", ö: "o", ş: "s", ü: "u",
+        Ç: "C", Ğ: "G", İ: "I", Ö: "O", Ş: "S", Ü: "U"
+    };
+    return text.split("")
+        .map(c => trMap[c] || c)
+        .join("")
+        .toLowerCase()
+        .replace(/\s+/g, "-")
+        .replace(/[^a-z0-9\-]/g, "")
+        .replace(/\-+/g, "-")
+        .replace(/^\-+|\-+$/g, "");
+}
+
 export default async function handler(req, res) {
     if (req.method === "POST") {
         const form = new IncomingForm({ keepExtensions: true });
@@ -26,6 +42,7 @@ export default async function handler(req, res) {
             const content = fields.content?.[0] || fields.content;
             const mediaFile = files.media?.[0] || files.media;
 
+
             if (!title || !content) {
                 return res.status(400).json({ error: "Başlık ve içerik gerekli." });
             }
@@ -38,7 +55,6 @@ export default async function handler(req, res) {
                     const fileName = `media_${Date.now()}${ext}`;
                     const fileBuffer = fs.readFileSync(mediaFile.filepath);
 
-                    // Supabase Storage'a upload ederken fetch override ile duplex: "half" ekle
                     const { data: uploadData, error: uploadError } = await supabase.storage
                         .from("media")
                         .upload(fileName, fileBuffer, {
@@ -60,9 +76,34 @@ export default async function handler(req, res) {
             }
 
             try {
+                const slug = createSlug(title);
+
+                // Aynı slug varsa sonuna rastgele sayı ekle (basit çakışma önleme)
+                let finalSlug = slug;
+                let exists = true;
+                let counter = 1;
+                while (exists) {
+                    const { data, error } = await supabase
+                        .from("posts")
+                        .select("id")
+                        .eq("slug", finalSlug)
+                        .limit(1);
+
+                    if (error) {
+                        console.error("Slug kontrol hatası:", error);
+                        break; // Hata varsa döngüden çık
+                    }
+                    if (data.length === 0) {
+                        exists = false; // Benzersiz slug bulundu
+                    } else {
+                        finalSlug = slug + "-" + counter;
+                        counter++;
+                    }
+                }
+
                 const { data, error } = await supabase
                     .from("posts")
-                    .insert([{ title, content, media_url }])
+                    .insert([{ title, content, media_url, slug: finalSlug }])
                     .select();
 
                 if (error) {
@@ -86,13 +127,16 @@ export default async function handler(req, res) {
             const title = fields.title?.[0] || fields.title;
             const content = fields.content?.[0] || fields.content;
             if (!id || !title || !content) return res.status(400).json({ error: "ID, başlık ve içerik gerekli." });
-            // Medya güncellemesi eklenebilir
+
             try {
+                const slug = createSlug(title);
+
                 const { data, error } = await supabase
                     .from("posts")
-                    .update({ title, content })
+                    .update({ title, content, slug })
                     .eq("id", id)
                     .select();
+
                 if (error) return res.status(500).json({ error: "Güncelleme hatası." });
                 return res.status(200).json({ message: "İçerik güncellendi.", post: data[0] });
             } catch (err) {
@@ -103,20 +147,31 @@ export default async function handler(req, res) {
 
     else if (req.method === "GET") {
         try {
-            const { search, page = 1, limit = 9 } = req.query;
+            const { slug, search, page = 1, limit = 9 } = req.query;
 
-            // string olan değerleri integer yap
+            if (slug) {
+                const { data, error } = await supabase
+                    .from("posts")
+                    .select("*")
+                    .eq("slug", slug)
+                    .single();
+
+                if (error || !data) {
+                    return res.status(404).json({ error: "İçerik bulunamadı." });
+                }
+
+                return res.status(200).json(data);
+            }
+
             const pageNum = parseInt(page, 10) || 1;
             const limitNum = parseInt(limit, 10) || 9;
 
             let query = supabase.from("posts").select("*").order("created_at", { ascending: false });
 
             if (search) {
-                // Basit metin arama: title ve content içinde geçenleri filtrele
                 query = query.ilike("title", `%${search}%`).or(`content.ilike.%${search}%`);
             }
 
-            // Sayfalama için offset ve limit hesaplama
             const offset = (pageNum - 1) * limitNum;
             query = query.range(offset, offset + limitNum - 1);
 

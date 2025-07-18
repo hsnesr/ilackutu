@@ -54,6 +54,18 @@ function hideProgressBar() {
 
 // POSTS
 async function loadPosts(page = 1, search = "", limitParam) {
+    const postsDiv = document.getElementById("posts");
+    const paginationUl = document.getElementById("pagination");
+
+    if (!postsDiv) {
+        console.error("posts container bulunamadı!");
+        return;
+    }
+    if (!paginationUl) {
+        console.error("pagination container bulunamadı!");
+        return;
+    }
+
     currentPage = page;
     showProgressBar();
 
@@ -78,7 +90,8 @@ async function loadPosts(page = 1, search = "", limitParam) {
             const slug = slugify(post.title);
             return `
             <div class="col-md-6 col-lg-4">
-                <a href="/post/${slug}" class="text-decoration-none text-dark">
+                <a href="/post/${post.slug}"
+ class="text-decoration-none text-dark">
                     <div class="card h-100">
                         <div class="card-body">
                             <h5 class="card-title">${post.title}</h5>
@@ -109,39 +122,7 @@ async function loadPosts(page = 1, search = "", limitParam) {
     }
 }
 
-// SUGGESTIONS
-async function loadSuggestions(query = "") {
-    const suggestionList = document.getElementById("suggestionList");
-    if (!suggestionList) return;
 
-    const params = new URLSearchParams();
-    params.append("page", 1);
-    params.append("limit", 6);
-    if (query) params.append("search", query);
-
-    try {
-        const res = await fetch(`/api/posts?${params.toString()}`);
-        if (!res.ok) throw new Error("Öneriler alınamadı.");
-
-        const posts = await res.json();
-
-        if (posts.length === 0) {
-            suggestionList.style.display = "none";
-            suggestionList.innerHTML = "";
-            return;
-        }
-
-        suggestionList.innerHTML = posts.map(post =>
-            `<li class="list-group-item list-group-item-action" style="cursor:pointer;" data-title="${post.title}">${post.title}</li>`
-        ).join("");
-
-        suggestionList.style.display = "block";
-    } catch (err) {
-        suggestionList.style.display = "none";
-        suggestionList.innerHTML = "";
-        console.error(err);
-    }
-}
 
 // SEARCH EVENTS
 function initSearchEvents() {
@@ -189,8 +170,3 @@ function initSearchEvents() {
         }
     });
 }
-
-// Başlangıç verileri
-document.addEventListener("DOMContentLoaded", () => {
-    loadPosts(currentPage);
-});
