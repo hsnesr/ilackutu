@@ -30,12 +30,14 @@ document.getElementById("logoutBtn").addEventListener("click", () => {
   window.location.href = "login.html";
 });
 
+const contentEditor = document.getElementById("contentEditor");
+
 // İçerik formu gönderimi
 document.getElementById("contentForm").addEventListener("submit", async (e) => {
   e.preventDefault();
 
   const title = document.getElementById("title").value.trim();
-  const content = document.getElementById("contentText").value.trim();
+  const content = contentEditor.innerHTML.trim(); 
   const editId = document.getElementById("editId").value;
   const message = document.getElementById("message");
 
@@ -72,6 +74,7 @@ document.getElementById("contentForm").addEventListener("submit", async (e) => {
       selectedFiles = [];
       mediaInput.value = ""; // input dosya seçimini sıfırla
       mediaPreview.innerHTML = ""; // önizlemeyi temizle
+      contentEditor.innerHTML = ""; // içerik editörü temizle
     } else {
       message.innerHTML = `<div class="alert alert-danger">${data.error || 'Hata oluştu.'}</div>`;
     }
@@ -79,6 +82,22 @@ document.getElementById("contentForm").addEventListener("submit", async (e) => {
     message.innerHTML = `<div class="alert alert-danger">Sunucu hatası.</div>`;
   }
 });
+
+const toolbar = document.getElementById("toolbar");
+
+toolbar.addEventListener("click", (e) => {
+  if (e.target.tagName === "BUTTON" || e.target.closest("button")) {
+    const button = e.target.tagName === "BUTTON" ? e.target : e.target.closest("button");
+    const command = button.getAttribute("data-command");
+    const value = button.getAttribute("data-value") || null;
+
+    if (command) {
+      document.execCommand(command, false, value);
+      contentEditor.focus();
+    }
+  }
+});
+
 
 // İptal Et Butonu click => clean form
 document.getElementById("cancelEditBtn").addEventListener("click", () => {
@@ -138,9 +157,10 @@ async function loadContents() {
         const id = button.getAttribute("data-id");
         const title = button.getAttribute("data-title");
         const content = button.getAttribute("data-content");
+        contentEditor.innerHTML = content;
 
         document.getElementById("title").value = title;
-        document.getElementById("contentText").value = content;
+        //document.getElementById("contentEditor").value = content;
         document.getElementById("editId").value = id;
 
         // İptal Et butonunu göster
@@ -199,7 +219,6 @@ document.getElementById("confirmDeleteBtn").addEventListener("click", async () =
 });
 
 //MEDİA
-
 const mediaBtn = document.getElementById("mediaBtn");
 const mediaInput = document.getElementById("mediaInput");
 const mediaPreview = document.getElementById("mediaPreview");
@@ -208,7 +227,6 @@ let selectedFiles = [];
 mediaBtn.addEventListener("click", () => {
     mediaInput.click();
 });
-
 
 mediaInput.addEventListener("change", () => {
     selectedFiles = Array.from(mediaInput.files);
@@ -231,3 +249,9 @@ mediaInput.addEventListener("change", () => {
         mediaPreview.appendChild(wrapper);
     });
 });
+
+function stripHtml(html) {
+  const tmp = document.createElement("div");
+  tmp.innerHTML = html;
+  return tmp.textContent || tmp.innerText || "";
+}

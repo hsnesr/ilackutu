@@ -91,7 +91,7 @@ async function loadPosts(page = 1, search = "", limitParam) {
             return `
             <div class="col-md-6 col-lg-4">
   <a href="/post/${post.slug}" class="text-decoration-none text-dark">
-    <div class="card h-100">
+    <div class="card" style="min-height: 125px; max-height: 125px; height: 125px;"> <!-- %25 daha kısa -->
       <div class="row g-0 h-100">
         <!-- Sol: Resim -->
         <div class="col-4">
@@ -103,15 +103,15 @@ async function loadPosts(page = 1, search = "", limitParam) {
 
         <!-- Sağ: İçerik -->
         <div class="col-8">
-          <div class="card-body h-100 d-flex flex-column justify-content-between p-2">
+          <div class="card-body h-100 d-flex flex-column justify-content-between p-1">
             <div>
-              <h5 class="card-title mb-1">${post.title}</h5>
-              <h6 class="card-subtitle mt-3 text-muted" style="font-size: 0.8rem;">
+              <h5 class="card-title mt-2 ms-2 me-2">${post.title}</h5>
+              <h6 class="card-subtitle text-muted mt-2 ms-2 me-2">
                 ${new Date(post.created_at).toLocaleDateString()}
               </h6>
-              <p class="card-text small text-truncate" style="max-height: 4.5em; overflow: hidden;">
-                ${post.content}
-              </p>
+              <div class="card-text small text-truncate" style="max-height: 2.8em; overflow: hidden;">
+                <p class="mb-0">${post.content}</p>
+              </div>
             </div>
           </div>
         </div>
@@ -143,51 +143,11 @@ async function loadPosts(page = 1, search = "", limitParam) {
     }
 }
 
-
-
-// SEARCH EVENTS
-function initSearchEvents() {
-    const searchForm = document.getElementById("searchForm");
-    const searchInput = document.getElementById("searchInput");
-    const suggestionList = document.getElementById("suggestionList");
-
-    if (!searchForm || !searchInput || !suggestionList) return;
-
-    searchInput.addEventListener("focus", () => {
-        if (!searchInput.value.trim()) {
-            loadSuggestions();
-            loadPosts(1, "", 6);
-        }
-    });
-
-    searchInput.addEventListener("input", () => {
-        const val = searchInput.value.trim();
-        if (val) {
-            loadSuggestions(val);
-        } else {
-            loadSuggestions();
-        }
-    });
-
-    suggestionList.addEventListener("click", e => {
-        if (e.target && e.target.matches("li.list-group-item")) {
-            const selectedTitle = e.target.getAttribute("data-title");
-            searchInput.value = selectedTitle;
-            suggestionList.style.display = "none";
-            loadPosts(1, selectedTitle);
-        }
-    });
-
-    searchForm.addEventListener("submit", e => {
-        e.preventDefault();
-        const query = searchInput.value.trim();
-        loadPosts(1, query);
-        suggestionList.style.display = "none";
-    });
-
-    document.addEventListener("click", (e) => {
-        if (!searchForm.contains(e.target)) {
-            suggestionList.style.display = "none";
-        }
-    });
+// DETAY YAZISI İNDEX.HTML DE EDİTÖR İŞLEMEZ
+function stripHtml(html) {
+  const tmp = document.createElement("div");
+  tmp.innerHTML = html;
+  return tmp.textContent || tmp.innerText || "";
 }
+
+//const previewText = stripHtml(post.content).slice(0, 10) + "...";  // 150 karakter göster

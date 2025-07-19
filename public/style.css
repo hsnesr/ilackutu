@@ -40,6 +40,24 @@ body#indexbody .card-text {
     display: none;
 }
 
+body#postbody div#PostContentLyrics {
+  text-align: left!important;
+}
+
+/* Varsayılan olarak sticky olmasın */
+.sticky-top {
+  position: static;
+  top: auto;
+  z-index: auto;
+}
+/* Sadece mobilde sticky-top gibi çalışsın */
+@media (max-width: 768px) {
+  .sticky-top {
+    position: sticky;
+    top: 0;
+    z-index: 1020; /* Navbar için genelde yeterlidir */
+  }
+}
 
 #progressBar {
     position: fixed;
@@ -54,3 +72,9 @@ body#indexbody .card-text {
 
 body#indexbody .text-muted {transition: 300ms all;}
 body#indexbody .card:hover .text-muted {color: white!important;}
+
+tbody#contentsTableBody tr td, tbody#contentsTableBody tr td h2, tbody#contentsTableBody tr td b {
+  font-weight: normal;
+  font-size: 1rem;
+  text-transform: capitalize;
+}
