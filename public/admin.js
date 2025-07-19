@@ -112,6 +112,18 @@ document.getElementById("cancelEditBtn").addEventListener("click", () => {
   new bootstrap.Tab(document.querySelector('#contents-tab')).show();
 });
 
+// BUTONA İÇERİĞİN TAŞMASINI ENGELLENME HTML KODLARINI ENGELLE
+function escapeHtml(str) {
+  if (!str) return "";
+  return str
+    .replace(/&/g, "&amp;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+}
+
+
 // İÇERİKLERİM SEKMESİ
 async function loadContents() {
   try {
@@ -132,21 +144,28 @@ async function loadContents() {
     data.forEach(post => {
       const row = document.createElement("tr");
       row.innerHTML = `
-  <td>${post.title}</td>
-  <td style="width: 300px;max-width: 300px;overflow: hidden;border-left: 1px solid #ddd;text-overflow: ellipsis;">
-    <div class="content-preview" style="max-width: 500px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+  <td style="width: 200px;min-width:200px;">${post.title}</td>
+
+  <td style="min-height:75px;">
+    <div class="content-preview" style="display: -webkit-box;-webkit-line-clamp: 3;-webkit-box-orient: vertical;overflow: hidden;text-overflow: ellipsis;">
       ${post.content}
     </div>
   </td>
-  <td style="text-align:right;width: 300px;max-width: 300px;overflow: hidden;border-left: 1px solid #ddd;text-overflow: ellipsis;">
-    <button class="btn btn-sm btn-secondary  edit-btn" data-id="${post.id}" data-title="${post.title}" data-content="${post.content}">
+
+  <td style="width: 200px;min-width:200px; text-align: right;">
+    <button class="btn btn-sm btn-secondary edit-btn" 
+      data-id="${post.id}" 
+      data-title="${escapeHtml(post.title)}" 
+      data-content="${escapeHtml(post.content)}">
       Düzenle
     </button>
+    
     <button class="btn btn-sm btn-danger delete-btn" data-id="${post.id}">
       Sil
     </button>
   </td>
 `;
+
 
       contentsTableBody.appendChild(row);
     });

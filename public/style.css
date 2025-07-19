@@ -96,6 +96,11 @@ tbody#contentsTableBody tr td, tbody#contentsTableBody tr td h2, tbody#contentsT
   margin: 50px auto;
 }
 
+/* ADMİN PANELİ TAB */
+.tab-content {
+  border-radius: 0 6px 6px 6px!important;
+}
+
 @keyframes rotate {
   100% {transform: rotate(-360deg);}
 }

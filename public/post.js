@@ -24,7 +24,7 @@
                 container.innerHTML = '<div class="alert alert-danger">İçerik bulunamadı.</div>';
                 return;
             }
-            showProgressBar();
+            
             try {
                 const res = await fetch(`/api/posts?slug=${encodeURIComponent(slug)}`);
                 if (!res.ok) throw new Error("Veri alınamadı");
@@ -56,8 +56,6 @@
 
             } catch (err) {
                 container.innerHTML = '<div class="alert alert-danger">İçerik bulunamadı.</div>';
-            }finally {
-        hideProgressBar();
-    }
+            }
         }
         loadPost();

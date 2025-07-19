@@ -24,34 +24,6 @@ function slugify(text) {
         .replace(/^\-+|\-+$/g, "");
 }
 
-// PROGRESS BARS
-function showProgressBar() {
-    const bar = document.getElementById("progressBar");
-    if (!bar) return;
-    bar.style.width = "0%";
-    bar.style.display = "block";
-
-    let width = 0;
-    const interval = setInterval(() => {
-        if (width >= 90) {
-            clearInterval(interval);
-        } else {
-            width += Math.random() * 10;
-            bar.style.width = width + "%";
-        }
-    }, 100);
-}
-
-function hideProgressBar() {
-    const bar = document.getElementById("progressBar");
-    if (!bar) return;
-    bar.style.width = "100%";
-    setTimeout(() => {
-        bar.style.display = "none";
-        bar.style.width = "0%";
-    }, 300);
-}
-
 // POSTS
 async function loadPosts(page = 1, search = "", limitParam) {
     const postsDiv = document.getElementById("posts");
@@ -67,7 +39,6 @@ async function loadPosts(page = 1, search = "", limitParam) {
     }
 
     currentPage = page;
-    showProgressBar();
 
     const usedLimit = limitParam || limit;
 
@@ -138,9 +109,7 @@ async function loadPosts(page = 1, search = "", limitParam) {
 
     } catch (error) {
         postsDiv.innerHTML = `<div class="alert alert-danger">Hata: ${error.message}</div>`;
-    } finally {
-        hideProgressBar();
-    }
+    } 
 }
 
 // DETAY YAZISI İNDEX.HTML DE EDİTÖR İŞLEMEZ
