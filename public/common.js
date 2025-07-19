@@ -1,3 +1,4 @@
+// SAYFALARI TEK KODLA ÇAĞIR
 function loadHTML(id, url, callback) {
   fetch(url)
     .then(response => response.text())
@@ -40,3 +41,55 @@ document.addEventListener("DOMContentLoaded", () => {
     
 });
 
+// COOKİES
+document.addEventListener("DOMContentLoaded", () => {
+    const cookieBanner = document.getElementById("cookieBanner");
+
+    // Daha önce kabul veya red edildiyse banner'ı gizle
+    if (localStorage.getItem("cookieConsent")) {
+      cookieBanner.style.display = "none";
+    }
+
+    // Kabul fonksiyonu
+    window.acceptCookies = () => {
+      localStorage.setItem("cookieConsent", "accepted");
+      cookieBanner.style.display = "none";
+    };
+
+    // Reddet fonksiyonu
+    window.declineCookies = () => {
+      localStorage.setItem("cookieConsent", "declined");
+      cookieBanner.style.display = "none";
+    };
+  });
+
+
+  // PROGRESS BARS
+function showProgressBar() {
+    const bar = document.getElementById("progressBar");
+    if (!bar) return;
+    bar.style.width = "0%";
+    bar.style.display = "block";
+
+    let width = 0;
+    const interval = setInterval(() => {
+        if (width >= 90) {
+            clearInterval(interval);
+        } else {
+            width += Math.random() * 10;
+            bar.style.width = width + "%";
+        }
+    }, 100);
+}
+
+function hideProgressBar() {
+    const bar = document.getElementById("progressBar");
+    if (!bar) return;
+    bar.style.width = "100%";
+    setTimeout(() => {
+        bar.style.display = "none";
+        bar.style.width = "0%";
+    }, 300);
+}
+
+window.addEventListener("load", () => {showProgressBar();setTimeout(() => {hideProgressBar();}, 1500);});
