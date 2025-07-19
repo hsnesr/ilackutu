@@ -58,6 +58,11 @@ body#postbody div#PostContentLyrics {
     position: sticky;
     top: 0;
     z-index: 1020; /* Navbar için genelde yeterlidir */
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  }
+  #postDetail img {
+    height: 200px!important;
+    width: auto; /* Oran bozulmasın diye */
   }
 }
 
@@ -79,6 +84,14 @@ tbody#contentsTableBody tr td, tbody#contentsTableBody tr td h2, tbody#contentsT
   text-transform: capitalize;
 }
 
+#postDetail img {
+  width: 100%;
+  height: 500px;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 12px;
+  margin: 20px 0;
+}
 #postDetail {padding: 15px;}
 #postDetail p {padding: 10px;text-align: left;}
 #postDetail h2 {text-align: left;padding: 15px;}
@@ -103,13 +116,4 @@ tbody#contentsTableBody tr td, tbody#contentsTableBody tr td h2, tbody#contentsT
 
 @keyframes rotate {
   100% {transform: rotate(-360deg);}
-}
-
-#postDetail img {
-  width: 100%;
-  height: 500px;
-  object-fit: cover;
-  object-position: center;
-  border-radius: 12px;
-  margin: 20px 0;
 }

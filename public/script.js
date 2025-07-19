@@ -98,10 +98,10 @@ async function loadPosts(page = 1, search = "", limitParam) {
         if (!search) {
             paginationUl.innerHTML = `
                 <li class="page-item ${page === 1 ? "disabled" : ""}">
-                    <a class="page-link" href="#" onclick="loadPosts(${page - 1});return false;">Önceki</a>
+                    <a class="page-link bg-white" href="#" onclick="loadPosts(${page - 1});return false;">Önceki</a>
                 </li>
                 <li class="page-item ${posts.length < usedLimit ? "disabled" : ""}">
-                    <a class="page-link" href="#" onclick="loadPosts(${page + 1});return false;">Sonraki</a>
+                    <a class="page-link bg-white" href="#" onclick="loadPosts(${page + 1});return false;">Sonraki</a>
                 </li>`;
         } else {
             paginationUl.innerHTML = "";
