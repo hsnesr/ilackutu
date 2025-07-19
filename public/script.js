@@ -80,7 +80,7 @@ async function loadPosts(page = 1, search = "", limitParam) {
               <h6 class="card-subtitle text-muted mt-2 ms-2 me-2">
                 ${new Date(post.created_at).toLocaleDateString()}
               </h6>
-              <div class="card-text small text-truncate" style="max-height: 2.8em; overflow: hidden;">
+              <div class="card-text small text-truncate" style="max-height: 1.4em; overflow: hidden;">
                 <p class="mb-0">${post.content}</p>
               </div>
             </div>

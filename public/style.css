@@ -23,7 +23,7 @@ body#indexbody h5.card-title {
   text-overflow: ellipsis;
 }
 
-body#indexbody .card {
+body#indexbody #posts .card {
 height: 300px;
 overflow: hidden;
 transition: 300ms all;
