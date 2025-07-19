@@ -1,0 +1,24 @@
+# Tüm botlara izin ver
+User-agent: *
+
+# Ana dizini taramalarına izin ver
+Allow: /
+
+# Önemli klasörler taranabilir
+Allow: /public/
+Allow: /static/
+
+# API endpoint'leri taramasın
+Disallow: /api/
+
+# Vercel’in özel klasörleri varsa onları da engelle (önlem amaçlı)
+Disallow: /_next/
+Disallow: /_vercel
+
+# Giriş, kayıt, admin gibi sayfalar taranmasın
+Disallow: /login
+Disallow: /register
+Disallow: /admin
+
+# Site haritası
+Sitemap: http://hsnesr.store/sitemap.xml

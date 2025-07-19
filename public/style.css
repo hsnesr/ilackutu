@@ -33,11 +33,13 @@ body#indexbody .card:hover {
 
 body#indexbody .card-text {
     display: -webkit-box;
-    -webkit-line-clamp: 5;
+    -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
+    display: none;
 }
+
 
 #progressBar {
     position: fixed;
@@ -50,4 +52,5 @@ body#indexbody .card-text {
     transition: width 0.4s ease;
 }
 
-body#indexbody .card:hover .text-muted {color: white!important;transition: 300ms all;}
+body#indexbody .text-muted {transition: 300ms all;}
+body#indexbody .card:hover .text-muted {color: white!important;}

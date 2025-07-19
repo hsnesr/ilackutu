@@ -68,6 +68,10 @@ document.getElementById("contentForm").addEventListener("submit", async (e) => {
       document.getElementById("editId").value = ""; // Güncelleme bittiyse sıfırla
       document.getElementById("cancelEditBtn").classList.add("d-none"); // iptal butonunu gizle
       loadContents(); // Listeyi yenile
+      // ⬇️ Eklemen gereken yeni satırlar:
+      selectedFiles = [];
+      mediaInput.value = ""; // input dosya seçimini sıfırla
+      mediaPreview.innerHTML = ""; // önizlemeyi temizle
     } else {
       message.innerHTML = `<div class="alert alert-danger">${data.error || 'Hata oluştu.'}</div>`;
     }

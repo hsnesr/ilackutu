@@ -90,19 +90,39 @@ async function loadPosts(page = 1, search = "", limitParam) {
             const slug = slugify(post.title);
             return `
             <div class="col-md-6 col-lg-4">
-                <a href="/post/${post.slug}"
- class="text-decoration-none text-dark">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <h5 class="card-title">${post.title}</h5>
-                            <h6 class="card-subtitle mb-2 text-muted">${new Date(post.created_at).toLocaleDateString()}</h6>
-                            <p class="card-text">${post.content}</p>
-                            <img src="${post.media_url}" alt="${post.title}"/>
-                        </div>
-                    </div>
-                </a>
-            </div>`;
+  <a href="/post/${post.slug}" class="text-decoration-none text-dark">
+    <div class="card h-100">
+      <div class="row g-0 h-100">
+        <!-- Sol: Resim -->
+        <div class="col-4">
+          <div class="h-100">
+            <img src="${post.media_url}" alt="${post.title}" 
+                 class="img-fluid w-100 h-100 object-fit-cover rounded-start">
+          </div>
+        </div>
+
+        <!-- Sağ: İçerik -->
+        <div class="col-8">
+          <div class="card-body h-100 d-flex flex-column justify-content-between p-2">
+            <div>
+              <h5 class="card-title mb-1">${post.title}</h5>
+              <h6 class="card-subtitle mt-3 text-muted" style="font-size: 0.8rem;">
+                ${new Date(post.created_at).toLocaleDateString()}
+              </h6>
+              <p class="card-text small text-truncate" style="max-height: 4.5em; overflow: hidden;">
+                ${post.content}
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </a>
+</div>
+`;
         }).join("");
+        
 
         if (!search) {
             paginationUl.innerHTML = `
