@@ -26,8 +26,7 @@ border: none;
 
 
 body#indexbody .card:hover {
-  background: #0d6efd;
-  color:  white;
+  background: #F5F5F5;
 }
 
 
@@ -39,6 +38,9 @@ body#indexbody .card-text {
     text-overflow: ellipsis;
     display: none;
 }
+
+body#indexbody .text-muted {transition: 300ms all;}
+body#indexbody .card:hover .text-muted {}
 
 body#postbody div#PostContentLyrics {
   text-align: left!important;
@@ -63,18 +65,46 @@ body#postbody div#PostContentLyrics {
     position: fixed;
     top: 0;
     left: 0;
-    height: 3px;
+    height: 4px;
     width: 0%;
-    background-color: #0d6efd;
+    background-color: #212529;
     z-index: 9999;
     transition: width 0.4s ease;
-}
 
-body#indexbody .text-muted {transition: 300ms all;}
-body#indexbody .card:hover .text-muted {color: white!important;}
+}
 
 tbody#contentsTableBody tr td, tbody#contentsTableBody tr td h2, tbody#contentsTableBody tr td b {
   font-weight: normal;
   font-size: 1rem;
   text-transform: capitalize;
+}
+
+#postDetail {padding: 15px;}
+#postDetail p {padding: 10px;text-align: left;}
+#postDetail h2 {text-align: left;padding: 15px;}
+#postDetail p.text-muted {background: #f3f3f3; border-radius: 4px;}
+#postDetail p.text-muted:after {content: " Tarihinde Yazıldı."}
+.blue-loader {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: conic-gradient(from 0deg, rgba(33, 37, 41, 0.9), rgba(33, 37, 41, 0.8), rgba(33, 37, 41, 0.5), rgba(33, 37, 41, 0.3), rgba(33, 37, 41, 0.1), rgba(33, 37, 41, 0) );
+  animation: rotate 1s linear infinite;
+/* Daire ortasını daha çok keserek çizgiyi inceltiyoruz: */
+  mask: radial-gradient(farthest-side, transparent 75%, black 76%);
+  -webkit-mask: radial-gradient(farthest-side, transparent 75%, black 76%);
+  margin: 50px auto;
+}
+
+@keyframes rotate {
+  100% {transform: rotate(-360deg);}
+}
+
+#postDetail img {
+  width: 100%;
+  height: 500px;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 12px;
+  margin: 20px 0;
 }

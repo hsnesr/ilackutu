@@ -96,8 +96,8 @@ async function loadPosts(page = 1, search = "", limitParam) {
         <!-- Sol: Resim -->
         <div class="col-4">
           <div class="h-100">
-            <img src="${post.media_url}" alt="${post.title}" 
-                 class="img-fluid w-100 h-100 object-fit-cover rounded-start">
+            <img src="${post.media_urls && post.media_urls.length > 0 ? post.media_urls[0] : '/placeholder.jpg'}" alt="${post.title}" class="img-fluid w-100 h-100 object-fit-cover rounded-start">
+
           </div>
         </div>
 
