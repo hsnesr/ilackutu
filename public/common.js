@@ -32,10 +32,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     loadHTML("navbar-placeholder", "/navbar.html", checkAllLoaded);
     loadHTML("header-placeholder", "/header.html", checkAllLoaded);
+    loadHTML("footer-placeholder", "/footer.html", checkAllLoaded);
     // Sadece anasayfadaysa main.html yükle
     if (window.location.pathname === "/") {
         loadHTML("main-placeholder", "/main.html", checkAllLoaded);
     }
-    loadHTML("footer-placeholder", "/footer.html", checkAllLoaded);
+    
 });
 

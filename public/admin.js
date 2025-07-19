@@ -32,12 +32,41 @@ document.getElementById("logoutBtn").addEventListener("click", () => {
 
 const contentEditor = document.getElementById("contentEditor");
 
+// PARAGRAFI OTOMATİK P TAGINA AL
+        function convertDivsToParagraphs(html) {
+  const container = document.createElement("div");
+  container.innerHTML = html;
+
+  // <div> öğelerini <p> ile değiştir
+  const newChildren = [];
+
+  container.childNodes.forEach(node => {
+    if (node.nodeType === Node.ELEMENT_NODE && node.tagName === "DIV") {
+      const p = document.createElement("p");
+      p.innerHTML = node.innerHTML.trim();
+      newChildren.push(p);
+    } else if (node.nodeType === Node.TEXT_NODE && node.textContent.trim() !== "") {
+      const p = document.createElement("p");
+      p.textContent = node.textContent.trim();
+      newChildren.push(p);
+    } else {
+      newChildren.push(node);
+    }
+  });
+
+  container.innerHTML = "";
+  newChildren.forEach(child => container.appendChild(child));
+
+  return container.innerHTML;
+}
+
 // İçerik formu gönderimi
 document.getElementById("contentForm").addEventListener("submit", async (e) => {
   e.preventDefault();
 
   const title = document.getElementById("title").value.trim();
-  const content = contentEditor.innerHTML.trim(); 
+  const rawContent = contentEditor.innerHTML.trim();
+  const content = convertDivsToParagraphs(rawContent);
   const editId = document.getElementById("editId").value;
   const message = document.getElementById("message");
 
@@ -83,20 +112,36 @@ document.getElementById("contentForm").addEventListener("submit", async (e) => {
   }
 });
 
+const insertImageBtn = document.getElementById("insertImageBtn");
+insertImageBtn.addEventListener("click", () => {
+  const imageUrl = prompt("Resim URL'sini girin:");
+  if (imageUrl) {
+    document.execCommand("insertImage", false, imageUrl);
+    contentEditor.focus();
+  }
+});
+
 const toolbar = document.getElementById("toolbar");
 
 toolbar.addEventListener("click", (e) => {
-  if (e.target.tagName === "BUTTON" || e.target.closest("button")) {
-    const button = e.target.tagName === "BUTTON" ? e.target : e.target.closest("button");
-    const command = button.getAttribute("data-command");
-    const value = button.getAttribute("data-value") || null;
+  const target = e.target.closest("button");
+  if (!target) return;
 
-    if (command) {
-      document.execCommand(command, false, value);
-      contentEditor.focus();
+  const command = target.getAttribute("data-command");
+  const value = target.getAttribute("data-value") || null;
+
+  if (command) {
+    document.execCommand(command, false, value);
+    contentEditor.focus();
+
+    // Toggle active class for formatting buttons
+    const toggleCommands = ["bold", "italic", "underline", "insertUnorderedList", "insertOrderedList"];
+    if (toggleCommands.includes(command)) {
+      target.classList.toggle("active");
     }
   }
 });
+
 
 
 // İptal Et Butonu click => clean form
@@ -144,15 +189,15 @@ async function loadContents() {
     data.forEach(post => {
       const row = document.createElement("tr");
       row.innerHTML = `
-  <td style="width: 200px;min-width:200px;">${post.title}</td>
+  <td style="min-height:75px;width: 200px;min-width:200px;">${post.title}</td>
 
-  <td style="min-height:75px;">
+  <td style="min-height:75px;width: 200px;min-width:200px;">
     <div class="content-preview" style="display: -webkit-box;-webkit-line-clamp: 3;-webkit-box-orient: vertical;overflow: hidden;text-overflow: ellipsis;">
       ${post.content}
     </div>
   </td>
 
-  <td style="width: 200px;min-width:200px; text-align: right;">
+  <td style="min-height:75px;width: 200px;min-width:200px;text-align: right;">
     <button class="btn btn-sm btn-secondary edit-btn" 
       data-id="${post.id}" 
       data-title="${escapeHtml(post.title)}" 

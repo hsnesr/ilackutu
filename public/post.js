@@ -13,9 +13,12 @@
                 .replace(/\-+/g, "-");
         }
 
+        
+
+
         async function loadPost() {
             const pathParts = window.location.pathname.split("/").filter(Boolean);
-            const slug = pathParts[1]; // Örn: /yazi-slug
+            const slug = pathParts[0]; // Örn: /yazi-slug
 
             const container = document.getElementById("postDetail");
             const mediaContainer = document.getElementById("media-container");
@@ -33,8 +36,8 @@
 
                 document.title = post.title + " | hsnesr";
                 container.innerHTML = `
-            <h2>${post.title}</h2>
-            <p class="text-muted">${new Date(post.created_at).toLocaleDateString()}</p>
+            <h1>${post.title}</h1>
+            <p class="text-muted bg-light">${new Date(post.created_at).toLocaleDateString()}</p>
             ${post.media_urls && post.media_urls.length > 0 
     ? post.media_urls.map(url => `<img src="${url}" alt="Post image" style="max-width:100%;margin-top:1rem;border-radius:12px;" />`).join("")
     : ""}
@@ -42,7 +45,8 @@
         `;
 
                 // 🌟 MEDYA URL varsa resmi göster
-                if (post.media_urls && post.media_urls.length > 0) {
+                // ÜSTTEKİ KODLA AYNI İŞLEVİ GÖRÜYOR
+                /*if (post.media_urls && post.media_urls.length > 0) {
     post.media_urls.forEach(url => {
         const img = document.createElement("img");
         img.src = url;
@@ -52,7 +56,7 @@
         img.style.borderRadius = "12px";
         mediaContainer.appendChild(img);
     });
-}
+}*/
 
             } catch (err) {
                 container.innerHTML = '<div class="alert alert-danger">İçerik bulunamadı.</div>';

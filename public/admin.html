@@ -49,16 +49,61 @@
           <div class="mb-3">
               <label for="content" class="form-label">İçerik</label>
               <div id="contentEditor" contenteditable="true" class="form-control" style="min-height: 150px; overflow-y: auto;"></div>
-              <div id="toolbar" class="my-2">
-  <button type="button" class="btn btn-sm btn-secondary" data-command="bold"><b>B</b></button>
-  <button type="button" class="btn btn-sm btn-secondary" data-command="formatBlock" data-value="h2">H2</button>
-  <!-- İstersen başka butonlar da ekleyebilirsin -->
+              <div id="toolbar" class="btn-toolbar flex-wrap gap-2 my-3" role="toolbar">
+
+  <!-- Biçimlendirme -->
+  <div class="btn-group me-2 mb-2" role="group">
+    <button type="button" class="btn btn-outline-dark btn-sm" data-command="bold"><b>B</b></button>
+    <button type="button" class="btn btn-outline-dark btn-sm" data-command="italic"><i>I</i></button>
+    <button type="button" class="btn btn-outline-dark btn-sm" data-command="underline"><u>U</u></button>
+  </div>
+
+  <!-- Başlık ve Paragraf -->
+  <div class="btn-group me-2 mb-2" role="group">
+    <button type="button" class="btn btn-outline-dark btn-sm" data-command="formatBlock" data-value="p">Paragraf</button>
+    <button type="button" class="btn btn-outline-dark btn-sm" data-command="formatBlock" data-value="blockquote">Alıntı</button>
+  </div>
+
+  <div class="btn-group me-2 mb-2" role="group">
+    <button type="button" class="btn btn-outline-dark btn-sm" data-command="formatBlock" data-value="h1">H1</button>
+    <button type="button" class="btn btn-outline-dark btn-sm" data-command="formatBlock" data-value="h2">H2</button>
+    <button type="button" class="btn btn-outline-dark btn-sm" data-command="formatBlock" data-value="h3">H3</button>
+    <button type="button" class="btn btn-outline-dark btn-sm" data-command="formatBlock" data-value="h4">H4</button>
+  </div>
+
+  <!-- Listeleme -->
+  <div class="btn-group me-2 mb-2" role="group">
+    <button type="button" class="btn btn-outline-dark btn-sm" data-command="insertUnorderedList">Madde</button>
+    <button type="button" class="btn btn-outline-dark btn-sm" data-command="insertOrderedList">Sıralı</button>
+  </div>
+
+  <!-- Hizalama -->
+  <div class="btn-group me-2 mb-2" role="group">
+    <button type="button" class="btn btn-outline-dark btn-sm" data-command="justifyLeft">Sol</button>
+    <button type="button" class="btn btn-outline-dark btn-sm" data-command="justifyCenter">Ortala</button>
+    <button type="button" class="btn btn-outline-dark btn-sm" data-command="justifyRight">Sağ</button>
+  </div>
+
+  <!-- Geri alma / Yineleme -->
+  <div class="btn-group me-2 mb-2" role="group">
+    <button type="button" class="btn btn-outline-secondary btn-sm" data-command="undo">Geri Al</button>
+    <button type="button" class="btn btn-outline-secondary btn-sm" data-command="redo">Yinele</button>
+  </div>
+
+  <!-- Resim Ekle -->
+  <div class="btn-group mb-2" role="group">
+    <button type="button" class="btn btn-outline-primary btn-sm" id="insertImageBtn">Resim (URL)</button>
+  </div>
+
 </div>
 
+
+
           </div>
-          <button type="submit" class="btn btn-success">Kaydet</button>
+          <button type="submit" class="btn btn-success">Paylaş</button>
+          <button type="button" class="btn btn-primary" id="mediaBtn">Öne Çıkan Resim</button>
           <button type="button" id="cancelEditBtn" class="btn btn-danger ms-2 d-none">İptal Et</button>
-          <button type="button" class="btn btn-primary" id="mediaBtn">Medya Ekle</button>
+
           <input type="file" id="mediaInput" accept="image/*,video/*" class="d-none" multiple />
           <div id="mediaPreview" class="d-flex flex-wrap gap-3 mt-3 mb-3"></div>
       </form>

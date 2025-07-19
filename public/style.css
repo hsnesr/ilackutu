@@ -78,10 +78,21 @@ body#postbody div#PostContentLyrics {
 
 }
 
+/* TOOLBAR BUTONLARI */
+#toolbar .btn.active {
+  background-color: #333;
+  color: white;
+  border-color: #111;
+}
+
+
 tbody#contentsTableBody tr td, tbody#contentsTableBody tr td h2, tbody#contentsTableBody tr td b {
   font-weight: normal;
   font-size: 1rem;
   text-transform: capitalize;
+}
+tbody#contentsTableBody img {
+  display:none;
 }
 
 #postDetail img {
@@ -90,12 +101,14 @@ tbody#contentsTableBody tr td, tbody#contentsTableBody tr td h2, tbody#contentsT
   object-fit: cover;
   object-position: center;
   border-radius: 12px;
-  margin: 20px 0;
+  margin: .25rem;
 }
+p {margin:0;padding:0;}
 #postDetail {padding: 15px;}
-#postDetail p {padding: 10px;text-align: left;}
-#postDetail h2 {text-align: left;padding: 15px;}
-#postDetail p.text-muted {background: #f3f3f3; border-radius: 4px;}
+#postDetail p {padding: .25rem 0;text-align: left;}
+#postDetail dl, ol, ul {margin: .5rem 0}
+#postDetail h1, #postDetail h2, #postDetail h3, #postDetail h4 {text-align: left;padding: .5rem 0;}
+#postDetail p.text-muted {background: #f3f3f3; border-radius: 4px; padding: .25rem .5rem;}
 #postDetail p.text-muted:after {content: " Tarihinde Yazıldı."}
 .blue-loader {
   width: 50px;
