@@ -1,9 +1,35 @@
 <!-- Blog Gönderileri -->
 <main class="container">
-    <div class="container mt-5" style="height:100%">
-        <div id="posts" class="row g-4 mb-4"></div>
-        <nav aria-label="Page navigation">
-            <ul class="pagination justify-content-center" id="pagination"></ul>
-        </nav>
+    <div class="container w-75 mx-auto my-5" style="height:100%">
+        <div class="row g-4 mb-4">
+            <!-- Yazılar Bölümü -->
+            <div class="col-md-8">
+                <div id="posts" class="row g-4"></div>
+                <nav aria-label="Page navigation" class="mt-4">
+                    <ul class="pagination justify-content-center" id="pagination"></ul>
+                </nav>
+            </div>
+
+            <!-- Sidebar Bölümü -->
+            <div class="col-md-4">
+                <div class="card mb-4 shadow-sm border-0 text-dark">
+                    <div class="card-body">
+                        <h5 class="card-title">Hakkımızda</h5>
+                        <p>Bu blogda en son haberleri ve yazıları bulabilirsiniz.</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Kategoriler</h5>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Teknoloji</li>
+                            <li class="list-group-item">Tasarım</li>
+                            <li class="list-group-item">Günlük Yaşam</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </main>

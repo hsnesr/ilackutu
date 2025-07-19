@@ -1,11 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+
 * {
     margin:0;
     padding: 0;
 }
 
 body {
-  font-family: Arial, sans-serif;
-  background: #f0f0f0;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+  font-size: 1.1rem;
+  background: #F0F0F0;
+  color: #1c1c1c;
 }
 
 body#indexbody h5.card-title {
@@ -25,7 +32,7 @@ border: none;
 }
 
 
-body#indexbody .card:hover {
+body#indexbody #posts .card:hover {
   background: #F5F5F5;
 }
 
@@ -103,10 +110,12 @@ tbody#contentsTableBody img {
   border-radius: 12px;
   margin: .25rem;
 }
-p {margin:0;padding:0;}
-#postDetail {padding: 15px;}
-#postDetail p {padding: .25rem 0;text-align: left;}
-#postDetail dl, ol, ul {margin: .5rem 0}
+
+#PostContentLyrics {padding-top: 1.5rem}
+#postDetail {padding: 2rem; font-family: 'Roboto', sans-serif;}
+#postDetail p {padding: 0;text-align: left;font-family: 'Roboto', sans-serif;font-weight: 500; line-height: 1.6rem;font-size: 1.2rem}
+#postDetail dl, #postDetail ol, #postDetail ul {margin: .5rem 0;font-family: 'Roboto', sans-serif;font-weight: 500;font-size: 1.3rem}
+#postDetail ol {font-size: 1.1rem!important}
 #postDetail h1, #postDetail h2, #postDetail h3, #postDetail h4 {text-align: left;padding: .5rem 0;}
 #postDetail p.text-muted {background: #f3f3f3; border-radius: 4px; padding: .25rem .5rem;}
 #postDetail p.text-muted:after {content: " Tarihinde Yazıldı."}

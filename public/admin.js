@@ -134,11 +134,11 @@ toolbar.addEventListener("click", (e) => {
     document.execCommand(command, false, value);
     contentEditor.focus();
 
-    // Toggle active class for formatting buttons
-    const toggleCommands = ["bold", "italic", "underline", "insertUnorderedList", "insertOrderedList"];
+    // Toggle active Classları Editör Butonları
+    /*const toggleCommands = ["bold", "italic", "underline", "insertUnorderedList", "insertOrderedList"];
     if (toggleCommands.includes(command)) {
       target.classList.toggle("active");
-    }
+    }*/
   }
 });
 
