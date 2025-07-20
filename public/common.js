@@ -75,6 +75,7 @@ document.addEventListener("DOMContentLoaded", () => {
 // COOKİES
 document.addEventListener("DOMContentLoaded", () => {
     const cookieBanner = document.getElementById("cookieBanner");
+    if (!cookieBanner) return;  // Eğer yoksa devam etme
 
     // Daha önce kabul veya red edildiyse banner'ı gizle
     if (localStorage.getItem("cookieConsent")) {

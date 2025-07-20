@@ -193,12 +193,14 @@ export default async function handler(req, res) {
 
             let query = supabase.from("posts").select("*").order("created_at", { ascending: false });
 
-            if (tag) {query = query.contains("tags", [tag]);}
 
 
             if (search) {
-                query = query.ilike("title", `%${search}%`).or(`content.ilike.%${search}%`);
+                query = query.or(`title.ilike.%${search}%,content.ilike.%${search}%`);
             }
+
+            if (tag) {query = query.contains("tags", [tag]);}
+
 
             const offset = (pageNum - 1) * limitNum;
             query = query.range(offset, offset + limitNum - 1);
@@ -209,7 +211,7 @@ export default async function handler(req, res) {
                 console.error("Supabase GET hatası:", error);
                 return res.status(500).json({ error: "Veriler alınamadı." });
             }
-
+            
             return res.status(200).json(data);
         } catch (err) {
             console.error("GET işlemi sırasında hata:", err);

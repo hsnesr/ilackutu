@@ -24,7 +24,7 @@
             const mediaContainer = document.getElementById("media-container");
             
             if (!slug) {
-                container.innerHTML = '<div class="alert alert-danger">İçerik bulunamadı.</div>';
+                container.innerHTML = '<div class="alert alert-warning">İçerik bulunamadı.</div>';
                 return;
             }
             
@@ -63,7 +63,7 @@
 }*/
 
             } catch (err) {
-                container.innerHTML = '<div class="alert alert-danger">İçerik bulunamadı.</div>';
+                container.innerHTML = '<div class="alert alert-warning">İçerik bulunamadı.</div>';
             }
         }
         loadPost();
