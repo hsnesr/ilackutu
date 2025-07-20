@@ -196,8 +196,10 @@ export default async function handler(req, res) {
 
 
             if (search) {
-                query = query.or(`title.ilike.%${search}%,content.ilike.%${search}%`);
-            }
+            const safeSearch = `%${decodeURIComponent(search).replace(/[,()]/g, '')}%`;
+            query = query.or(`title.ilike.${safeSearch},content.ilike.${safeSearch}`);
+}
+
 
             if (tag) {query = query.contains("tags", [tag]);}
 

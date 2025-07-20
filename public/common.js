@@ -94,3 +94,57 @@ document.addEventListener("DOMContentLoaded", () => {
       cookieBanner.style.display = "none";
     };
   });
+
+
+  // ARAMA KUTUSU (global fonksiyon olarak tanımla)
+window.initSearch = () => {
+  const form = document.getElementById("searchForm");
+  const input = document.getElementById("searchInput");
+  const results = document.getElementById("results");
+
+  if (!form || !input || !results) return; // ❗ Elemanlar henüz yoksa çık
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const query = input.value.trim();
+    if (!query) {
+      results.innerHTML = '<p class="text-danger">Lütfen arama terimi girin.</p>';
+      return;
+    }
+
+    results.innerHTML = `<div class="blue-loader"></div>`;
+
+    try {
+      const res = await fetch(`/api/posts?search=${encodeURIComponent(query)}`);
+      const data = await res.json();
+
+      if (!res.ok) {
+        results.innerHTML = `<p class="alert alert-danger">Hata: ${data.error || "Bilinmeyen hata"}</p>`;
+        return;
+      }
+
+      if (data.length === 0) {
+        results.innerHTML = `<p class="alert alert-warning">Sonuç bulunamadı.</p>`;
+        return;
+      }
+
+      results.innerHTML = data
+        .map(
+          (post) => `
+              <a href="/${post.slug}" class="text-decoration-none">
+                <div class="card mb-3">
+                  <div class="card-body">
+                    <p class="text-primary">${post.title}</p>
+                    <p>${post.content?.slice(0, 150)}...</p>
+                  </div>
+                </div>
+              </a>
+        `
+        )
+        .join("");
+    } catch (err) {
+      results.innerHTML = `<p class="alert alert-danger">Sunucu hatası: ${err.message}</p>`;
+    }
+  });
+};
