@@ -67,6 +67,7 @@ document.getElementById("contentForm").addEventListener("submit", async (e) => {
   const title = document.getElementById("title").value.trim();
   const rawContent = contentEditor.innerHTML.trim();
   const content = convertDivsToParagraphs(rawContent);
+  const tags = document.getElementById("tags").value.trim().split(",").map(t => t.trim()).filter(Boolean);
   const editId = document.getElementById("editId").value;
   const message = document.getElementById("message");
 
@@ -77,9 +78,9 @@ document.getElementById("contentForm").addEventListener("submit", async (e) => {
 
   try {
     const method = editId ? "PUT" : "POST";
-    const bodyData = editId ? { id: editId, title, content } : { title, content };
 
       const formData = new FormData();
+      formData.append("tags", JSON.stringify(tags)); // backend JSON olarak alacak
       formData.append("title", title);
       formData.append("content", content);
       if (editId) formData.append("id", editId);
@@ -111,6 +112,7 @@ document.getElementById("contentForm").addEventListener("submit", async (e) => {
     message.innerHTML = `<div class="alert alert-danger">Sunucu hatası.</div>`;
   }
 });
+
 
 const insertImageBtn = document.getElementById("insertImageBtn");
 insertImageBtn.addEventListener("click", () => {
@@ -201,7 +203,8 @@ async function loadContents() {
     <button class="btn btn-sm btn-secondary edit-btn" 
       data-id="${post.id}" 
       data-title="${escapeHtml(post.title)}" 
-      data-content="${escapeHtml(post.content)}">
+      data-content="${escapeHtml(post.content)}"
+      data-tags="${post.tags}">
       Düzenle
     </button>
     
@@ -217,23 +220,24 @@ async function loadContents() {
 
     // 🔥 Tüm düzenle butonlarına olayları EKLE
     document.querySelectorAll(".edit-btn").forEach(button => {
-      button.addEventListener("click", () => {
-        const id = button.getAttribute("data-id");
-        const title = button.getAttribute("data-title");
-        const content = button.getAttribute("data-content");
-        contentEditor.innerHTML = content;
+  button.addEventListener("click", () => {
+    const id = button.getAttribute("data-id");
+    const title = button.getAttribute("data-title");
+    const content = button.getAttribute("data-content");
+    const tagsStr = button.getAttribute("data-tags") || "";
+    const tags = tagsStr ? tagsStr.split(",").map(t => t.trim()) : [];
 
-        document.getElementById("title").value = title;
-        //document.getElementById("contentEditor").value = content;
-        document.getElementById("editId").value = id;
 
-        // İptal Et butonunu göster
-        document.getElementById("cancelEditBtn").classList.remove("d-none");
+    contentEditor.innerHTML = content;
+    document.getElementById("title").value = title;
+    document.getElementById("editId").value = id;
+    document.getElementById("tags").value = tags.join(", ");
 
-        // "İçerik Ekle" sekmesine geç
-        new bootstrap.Tab(document.querySelector('#content-tab')).show();
-      });
-    });
+    document.getElementById("cancelEditBtn").classList.remove("d-none");
+    new bootstrap.Tab(document.querySelector('#content-tab')).show();
+  });
+});
+
 
     // 🔥 Silme modalı ile
     document.querySelectorAll(".delete-btn").forEach(button => {

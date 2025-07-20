@@ -67,6 +67,7 @@ export default async function handler(req, res) {
 
             const title = fields.title?.[0] || fields.title;
             const content = fields.content?.[0] || fields.content;
+            const tags = fields.tags ? JSON.parse(fields.tags?.[0] || fields.tags) : [];
 
             if (!title || !content) {
                 return res.status(400).json({ error: "Başlık ve içerik gerekli." });
@@ -107,7 +108,7 @@ export default async function handler(req, res) {
 
                 const { data, error } = await supabase
                     .from("posts")
-                    .insert([{ title, content, media_urls: media_urls.length > 0 ? media_urls : null, slug: finalSlug }])
+                    .insert([{ title, content, media_urls: media_urls.length > 0 ? media_urls : null, slug: finalSlug, tags }])
                     .select();
 
                 if (error) {
@@ -132,6 +133,7 @@ export default async function handler(req, res) {
             const id = fields.id?.[0] || fields.id;
             const title = fields.title?.[0] || fields.title;
             const content = fields.content?.[0] || fields.content;
+            const tags = fields.tags ? JSON.parse(fields.tags?.[0] || fields.tags) : [];
 
             if (!id || !title || !content) {
                 return res.status(400).json({ error: "ID, başlık ve içerik gerekli." });
@@ -147,7 +149,7 @@ export default async function handler(req, res) {
 
                 const slug = createSlug(title);
 
-                const updateData = { title, content, slug };
+                const updateData = { title, content, slug, tags };
                 if (media_urls !== null) {
                     updateData.media_urls = media_urls.length > 0 ? media_urls : null;
                 }
@@ -170,7 +172,7 @@ export default async function handler(req, res) {
 
     else if (req.method === "GET") {
         try {
-            const { slug, search, page = 1, limit = 9 } = req.query;
+            const { slug, search, page = 1, limit = 9, tag } = req.query;
 
             if (slug) {
                 const { data, error } = await supabase
@@ -190,6 +192,9 @@ export default async function handler(req, res) {
             const limitNum = parseInt(limit, 10) || 9;
 
             let query = supabase.from("posts").select("*").order("created_at", { ascending: false });
+
+            if (tag) {query = query.contains("tags", [tag]);}
+
 
             if (search) {
                 query = query.ilike("title", `%${search}%`).or(`content.ilike.%${search}%`);
