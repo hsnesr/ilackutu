@@ -143,7 +143,7 @@ tbody#contentsTableBody img {
 
 /* RESPONSİVE */
 @media (max-width: 1050px) {
-  .sticky-top {
+  #navbar-placeholder {
     position: sticky;
     top: 0;
     z-index: 1020; /* Navbar için genelde yeterlidir */
