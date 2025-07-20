@@ -113,7 +113,6 @@ document.getElementById("contentForm").addEventListener("submit", async (e) => {
   }
 });
 
-
 const insertImageBtn = document.getElementById("insertImageBtn");
 insertImageBtn.addEventListener("click", () => {
   const imageUrl = prompt("Resim URL'sini girin:");
@@ -152,12 +151,17 @@ document.getElementById("cancelEditBtn").addEventListener("click", () => {
   document.getElementById("editId").value = "";
   document.getElementById("message").innerHTML = "";
 
-  // Butonu tekrar gizle
+  contentEditor.innerHTML = "";
+
+  selectedFiles = [];
+  mediaInput.value = "";
+  mediaPreview.innerHTML = "";
+
   document.getElementById("cancelEditBtn").classList.add("d-none");
 
-  // "İçeriklerim" sekmesine geç
   new bootstrap.Tab(document.querySelector('#contents-tab')).show();
 });
+
 
 // BUTONA İÇERİĞİN TAŞMASINI ENGELLENME HTML KODLARINI ENGELLE
 function escapeHtml(str) {
