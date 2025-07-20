@@ -149,6 +149,7 @@ tbody#contentsTableBody img {
     z-index: 1020; /* Navbar için genelde yeterlidir */
     box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
   }
+  #searchres 
   #postDetail img {
     height: 200px!important;
     width: 100%; /* Oran bozulmasın diye */
