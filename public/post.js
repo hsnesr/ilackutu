@@ -13,8 +13,6 @@
                 .replace(/\-+/g, "-");
         }
 
-        
-
 
         async function loadPost() {
             const pathParts = window.location.pathname.split("/").filter(Boolean);
