@@ -44,8 +44,6 @@ function loadHTML(id, url, callback) {
 
     .catch(err => console.error(`Error loading ${url}:`, err));
 }
-
-
 document.addEventListener("DOMContentLoaded", () => {
     let loadedCount = 0;
 

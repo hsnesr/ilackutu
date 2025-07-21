@@ -18,22 +18,39 @@ body {
   color: #1c1c1c;
 }
 
-body#egitimbody .card,
-body#saglikliyasambody .card {
+/* STATIK SAYFALAR */
+body#egitimbody main.container .card,
+body#saglikliyasambody main.container .card,
+body#egzersizsporbody main.container .card {
+  box-shadow: none!important;
+  background: transparent!important;
+}
+
+body#egitimbody #postsContainer .card,
+body#saglikliyasambody #postsContainer .card,
+body#egzersizsporbody #postsContainer .card
+{
   border: none!important;
+  min-height: 133px!important;
+  max-height: 133px!important;
+  height: 133px!important;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.050)!important;
 }
 body#egitimbody #postsContainer .card-body,
-body#saglikliyasambody #postsContainer .card-body {
+body#saglikliyasambody #postsContainer .card-body,
+body#egzersizsporbody #postContainer .card-body {
   border-bottom: 1px solid #ddd!important;
 }
 
-body#egitimbody #postsContainer .card:last-child .card-body, 
+body#egitimbody #postsContainer .card:last-child .card-body,
+body#egzersizsporbody #postsContainer .card:last-child .card-body,
 body#body#saglikliyasambody #postsContainer .card:last-child .card-body {
   border-bottom: none!important;
 }
 
 body#egitimbody #postsContainer .card:last-child,
-body#saglikliyasambody #postsContainer .card:last-child {
+body#saglikliyasambody #postsContainer .card:last-child,
+body#egzersizsporbody #postsContainer .card:last-child {
   margin-bottom: 0!important;
 }
 
@@ -56,6 +73,7 @@ border: none;
 
 
 body#indexbody .card-text,
+body#egzersizspor .card-text,
 body#saglikliyasambody .card-text,
 body#egitimbody .card-text{
     display: -webkit-box;
