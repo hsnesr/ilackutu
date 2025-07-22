@@ -21,4 +21,4 @@ Disallow: /register
 Disallow: /admin
 
 # Site haritası
-Sitemap: http://hsnesr.store/sitemap.xml
+Sitemap: http://ilackutusu.com/sitemap.xml

@@ -35,7 +35,7 @@
                 post.tags = post.tags.map(tag => `<span class="badge bg-light text-dark me-1">#${tag}</span>`).join('');
 
 
-                document.title = post.title + " | hsnesr";
+                document.title = post.title + " - İlaç Kutusu";
                 container.innerHTML = `
             <h1>${post.title}</h1>
             <p class="text-muted bg-light">${new Date(post.created_at).toLocaleDateString()}</p>
