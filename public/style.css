@@ -140,6 +140,21 @@ tbody#contentsTableBody img {
   -webkit-mask: radial-gradient(farthest-side, transparent 75%, black 76%);
   margin: 50px auto;
 }
+
+.blue-loader {
+  width: 30px;
+  height: 30px;
+  border: 6px solid #ccc;           /* Gri arka plan (boş olan kısım) */
+  border-top-color: #000;           /* Siyah (dolu görünen dönen kısım) */
+  border-radius: 50%;               /* Daire */
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
 #PostContentLyrics {padding-top: 1.5rem}
 #postDetail {padding: 2rem; font-family: 'Roboto', sans-serif;}
 #postDetail p {padding: 0;text-align: left;font-family: 'Roboto', sans-serif;font-weight: 500; line-height: 1.6rem;font-size: 1.2rem}

@@ -204,7 +204,7 @@ async function loadContents() {
   </td>
 
   <td style="min-height:75px;width: 200px;min-width:200px;text-align: right;">
-    <button class="btn btn-sm btn-secondary edit-btn" 
+    <button class="btn btn-sm btn-primary edit-btn" 
       data-id="${post.id}" 
       data-title="${escapeHtml(post.title)}" 
       data-content="${escapeHtml(post.content)}"
