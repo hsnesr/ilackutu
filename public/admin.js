@@ -211,6 +211,7 @@ async function loadContents() {
         data-content="${escapeHtml(post.content)}"
         data-tags="${post.tags}">
         İçeriği Düzenle
+        
       </button>
       <button class="btn btn-sm btn-danger delete-btn" data-id="${post.id}">İçeriği Sil</button>
     </td>
