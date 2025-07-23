@@ -12,6 +12,7 @@ export const config = {
 
 const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
 
+
 function createSlug(text) {
     const trMap = {
         ç: "c", ğ: "g", ı: "i", ö: "o", ş: "s", ü: "u",
