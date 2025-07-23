@@ -131,7 +131,7 @@
           </tr>
         </thead>
         <tbody id="contentsTableBody">
-          <div class="d-flex justify-content-end mb-2">
+          <div class="d-flex justify-content-start mb-2">
           <button id="topluSilBtn" class="btn btn-danger text-light">Seçilenleri Sil</button>
           <button id="taslakYapBtn" class="btn btn-warning ms-2 text-light">Seçilenleri Taslak Yap</button>
           <button id="taslaktanCikarBtn" class="btn btn-success ms-2 text-light">Taslaktan Çıkar</button>
@@ -174,6 +174,26 @@
     </div>
   </div>
 </div>
+
+<!-- Ortak Modal (Tek modal, dinamik içerik için kullanılabilir) -->
+<div class="modal fade" id="actionConfirmModal" tabindex="-1" aria-labelledby="actionConfirmModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="actionConfirmModalLabel">İşlem Onayı</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Kapat"></button>
+      </div>
+      <div class="modal-body" id="actionConfirmModalBody">
+        <!-- Dinamik olarak içerik değişecek -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Vazgeç</button>
+        <button type="button" class="btn btn-primary" id="modalConfirmBtn">Onayla</button>
+      </div>
+    </div>
+  </div>
+</div>
+
  <script src="/common.js"></script>
  <script src="/admin.js"></script>
  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

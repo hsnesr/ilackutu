@@ -199,27 +199,30 @@ async function loadContents() {
   const isDraft = post.taslak === true;
 
   row.innerHTML = `
-    <td><input type="checkbox" class="secim-checkbox" data-id="${post.id}"></td>
-    <td>${post.title} ${isDraft ? '<span class="badge bg-secondary">Taslak</span>' : ''}</td>
-    <td>
-      <div class="content-preview">${post.content}</div>
-    </td>
-    <td class="text-end">
-      <button class="btn btn-sm btn-primary edit-btn" 
-        data-id="${post.id}" 
-        data-title="${escapeHtml(post.title)}" 
-        data-content="${escapeHtml(post.content)}"
-        data-tags="${post.tags}">
-        İçeriği Düzenle
-        
-      </button>
-      <button class="btn btn-sm btn-danger delete-btn" data-id="${post.id}">İçeriği Sil</button>
-    </td>
-  `;
+  <td><input type="checkbox" class="secim-checkbox" data-id="${post.id}"></td>
+  <td><span class="title-cell">${post.title}</span></td>
+  <td>
+    <div class="content-preview content-cell">${post.content}</div>
+  </td>
+  <td class="text-end">
+  ${isDraft ? '<span class="badge bg-secondary">Taslak</span>' : ''}
+    <button class="btn btn-sm btn-primary edit-btn" 
+      data-id="${post.id}" 
+      data-title="${escapeHtml(post.title)}" 
+      data-content="${escapeHtml(post.content)}"
+      data-tags="${post.tags}">
+      İçeriği Düzenle
+    </button>
+    <button class="btn btn-sm btn-danger delete-btn" data-id="${post.id}">İçeriği Sil</button>
+  </td>
+`;
+
 
   if (isDraft) {
-    row.style.opacity = "0.5"; // satırı soluk yap
-  }
+  row.querySelector(".title-cell").style.opacity = "0.5";
+  row.querySelector(".content-cell").style.opacity = "0.5";
+}
+
 
   contentsTableBody.appendChild(row);
 });
@@ -264,108 +267,113 @@ document.addEventListener("DOMContentLoaded", () => {
   loadContents();
 });
 
-// TASLAK YAP
-document.getElementById("taslakYapBtn").addEventListener("click", async () => {
-  const selectedCheckboxes = document.querySelectorAll(".secim-checkbox:checked");
-  const ids = Array.from(selectedCheckboxes).map(cb => cb.getAttribute("data-id"));
+const selectedIds = () =>
+  Array.from(document.querySelectorAll(".secim-checkbox:checked")).map(cb =>
+    cb.getAttribute("data-id")
+  );
 
+const showModal = (message, onConfirm) => {
+  const modalElement = new bootstrap.Modal(document.getElementById("actionConfirmModal"));
+  document.getElementById("actionConfirmModalBody").textContent = message;
+
+  const confirmBtn = document.getElementById("modalConfirmBtn");
+  const newConfirmHandler = () => {
+    confirmBtn.removeEventListener("click", newConfirmHandler); // eski handler'ları temizle
+    modalElement.hide();
+    onConfirm();
+  };
+
+  confirmBtn.addEventListener("click", newConfirmHandler);
+  modalElement.show();
+};
+
+// TASLAK YAP
+document.getElementById("taslakYapBtn").addEventListener("click", () => {
+  const ids = selectedIds();
   if (ids.length === 0) {
-    alert("Lütfen en az bir içerik seçin.");
+    showModal("Lütfen en az bir içerik seçin.", () => {});
     return;
   }
 
-  try {
-    const res = await fetch("/api/posts/draft", {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ ids })
-    });
+  showModal("Seçilen içerikleri taslak olarak işaretlemek istediğinize emin misiniz?", async () => {
+    try {
+      const res = await fetch("/api/posts/draft", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ids })
+      });
+      const data = await res.json();
 
-    const data = await res.json();
-
-    if (res.ok) {
-      alert("Seçilen içerikler taslak olarak işaretlendi.");
-      loadContents(); // tabloyu yenile
-    } else {
-      alert("Hata: " + (data.error || "Bilinmeyen bir hata"));
+      if (res.ok) {
+        showModal("Seçilen içerikler başarıyla taslak yapıldı.", loadContents);
+      } else {
+        showModal("Hata: " + (data.error || "Bilinmeyen bir hata"), () => {});
+      }
+    } catch (err) {
+      console.error("Taslak yapma hatası:", err);
+      showModal("Sunucu hatası oluştu.", () => {});
     }
-  } catch (err) {
-    console.error("Taslak işlemi hatası:", err);
-    alert("Sunucu hatası.");
-  }
+  });
 });
 
 // TASLAKTAN ÇIKAR
-document.getElementById("taslaktanCikarBtn").addEventListener("click", async () => {
-  const selectedCheckboxes = document.querySelectorAll(".secim-checkbox:checked");
-  const ids = Array.from(selectedCheckboxes).map(cb => cb.getAttribute("data-id"));
-
+document.getElementById("taslaktanCikarBtn").addEventListener("click", () => {
+  const ids = selectedIds();
   if (ids.length === 0) {
-    alert("Lütfen en az bir içerik seçin.");
+    showModal("Lütfen en az bir içerik seçin.", () => {});
     return;
   }
 
-  try {
-    const res = await fetch("/api/posts/undraft", {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ ids })
-    });
+  showModal("Seçilen içerikleri yayına almak istediğinize emin misiniz?", async () => {
+    try {
+      const res = await fetch("/api/posts/undraft", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ids })
+      });
+      const data = await res.json();
 
-    const data = await res.json();
-
-    if (res.ok) {
-      alert("Seçilen içerikler taslaktan çıkarıldı.");
-      loadContents(); // tabloyu yenile
-    } else {
-      alert("Hata: " + (data.error || "Bilinmeyen bir hata"));
+      if (res.ok) {
+        showModal("İçerikler yayına alındı.", loadContents);
+      } else {
+        showModal("Hata: " + (data.error || "Bilinmeyen bir hata"), () => {});
+      }
+    } catch (err) {
+      console.error("Taslaktan çıkarma hatası:", err);
+      showModal("Sunucu hatası oluştu.", () => {});
     }
-  } catch (err) {
-    console.error("Taslaktan çıkarma hatası:", err);
-    alert("Sunucu hatası.");
-  }
+  });
 });
-
 
 // TOPLU SİLME
-document.getElementById("topluSilBtn").addEventListener("click", async () => {
-  const selectedCheckboxes = document.querySelectorAll(".secim-checkbox:checked");
-  const ids = Array.from(selectedCheckboxes).map(cb => cb.getAttribute("data-id"));
-
+document.getElementById("topluSilBtn").addEventListener("click", () => {
+  const ids = selectedIds();
   if (ids.length === 0) {
-    alert("Lütfen en az bir içerik seçin.");
+    showModal("Lütfen en az bir içerik seçin.", () => {});
     return;
   }
 
-  const confirmDelete = confirm("Seçilen içerikleri silmek istediğinize emin misiniz?");
-  if (!confirmDelete) return;
+  showModal("Seçilen içerikleri silmek istediğinize emin misiniz?", async () => {
+    try {
+      const res = await fetch("/api/posts/delete-multiple", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ids })
+      });
+      const data = await res.json();
 
-  try {
-    const res = await fetch("/api/posts/delete-multiple", {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ ids })
-    });
-
-    const data = await res.json();
-
-    if (res.ok) {
-      alert("Seçilen içerikler silindi.");
-      loadContents(); // tabloyu yenile
-    } else {
-      alert("Hata: " + (data.error || "Bilinmeyen hata"));
+      if (res.ok) {
+        showModal("Seçilen içerikler başarıyla silindi.", loadContents);
+      } else {
+        showModal("Hata: " + (data.error || "Bilinmeyen hata"), () => {});
+      }
+    } catch (err) {
+      console.error("Toplu silme hatası:", err);
+      showModal("Sunucu hatası oluştu.", () => {});
     }
-  } catch (err) {
-    console.error("Toplu silme hatası:", err);
-    alert("Sunucu hatası.");
-  }
+  });
 });
+
 
 
 
