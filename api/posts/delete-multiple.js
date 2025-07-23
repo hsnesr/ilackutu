@@ -18,6 +18,7 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: "Geçerli ID listesi gönderin" });
   }
 
+  
   try {
     const { error } = await supabase
       .from("posts")
