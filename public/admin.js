@@ -178,12 +178,13 @@ function escapeHtml(str) {
 // İÇERİKLERİM SEKMESİ
 async function loadContents() {
   try {
-    const res = await fetch("/api/posts", {
-      method: "GET",
-      headers: {
-        "Authorization": `Bearer ${token}`
-      }
-    });
+    const res = await fetch("/api/posts?admin=true", {
+  method: "GET",
+  headers: {
+    "Authorization": `Bearer ${token}`
+  }
+});
+
 
     if (!res.ok) throw new Error("Veri çekilemedi");
 
@@ -193,34 +194,35 @@ async function loadContents() {
     contentsTableBody.innerHTML = "";
 
     data.forEach(post => {
-      const row = document.createElement("tr");
-      row.innerHTML = `
-  <td style="min-height:75px;width: 200px;min-width:200px;">${post.title}</td>
+  const row = document.createElement("tr");
 
-  <td style="min-height:75px;width: 200px;min-width:200px;">
-    <div class="content-preview" style="display: -webkit-box;-webkit-line-clamp: 3;-webkit-box-orient: vertical;overflow: hidden;text-overflow: ellipsis;">
-      ${post.content}
-    </div>
-  </td>
+  const isDraft = post.taslak === true;
 
-  <td style="min-height:75px;width: 200px;min-width:200px;text-align: right;">
-    <button class="btn btn-sm btn-primary edit-btn" 
-      data-id="${post.id}" 
-      data-title="${escapeHtml(post.title)}" 
-      data-content="${escapeHtml(post.content)}"
-      data-tags="${post.tags}">
-      Düzenle
-    </button>
-    
-    <button class="btn btn-sm btn-danger delete-btn" data-id="${post.id}">
-      Sil
-    </button>
-  </td>
-`;
+  row.innerHTML = `
+    <td><input type="checkbox" class="secim-checkbox" data-id="${post.id}"></td>
+    <td>${post.title} ${isDraft ? '<span class="badge bg-secondary">Taslak</span>' : ''}</td>
+    <td>
+      <div class="content-preview">${post.content}</div>
+    </td>
+    <td class="text-end">
+      <button class="btn btn-sm btn-primary edit-btn" 
+        data-id="${post.id}" 
+        data-title="${escapeHtml(post.title)}" 
+        data-content="${escapeHtml(post.content)}"
+        data-tags="${post.tags}">
+        İçeriği Düzenle
+      </button>
+      <button class="btn btn-sm btn-danger delete-btn" data-id="${post.id}">İçeriği Sil</button>
+    </td>
+  `;
 
+  if (isDraft) {
+    row.style.opacity = "0.5"; // satırı soluk yap
+  }
 
-      contentsTableBody.appendChild(row);
-    });
+  contentsTableBody.appendChild(row);
+});
+
 
     // 🔥 Tüm düzenle butonlarına olayları EKLE
     document.querySelectorAll(".edit-btn").forEach(button => {
@@ -260,6 +262,111 @@ async function loadContents() {
 document.addEventListener("DOMContentLoaded", () => {
   loadContents();
 });
+
+// TASLAK YAP
+document.getElementById("taslakYapBtn").addEventListener("click", async () => {
+  const selectedCheckboxes = document.querySelectorAll(".secim-checkbox:checked");
+  const ids = Array.from(selectedCheckboxes).map(cb => cb.getAttribute("data-id"));
+
+  if (ids.length === 0) {
+    alert("Lütfen en az bir içerik seçin.");
+    return;
+  }
+
+  try {
+    const res = await fetch("/api/posts/draft", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ ids })
+    });
+
+    const data = await res.json();
+
+    if (res.ok) {
+      alert("Seçilen içerikler taslak olarak işaretlendi.");
+      loadContents(); // tabloyu yenile
+    } else {
+      alert("Hata: " + (data.error || "Bilinmeyen bir hata"));
+    }
+  } catch (err) {
+    console.error("Taslak işlemi hatası:", err);
+    alert("Sunucu hatası.");
+  }
+});
+
+// TASLAKTAN ÇIKAR
+document.getElementById("taslaktanCikarBtn").addEventListener("click", async () => {
+  const selectedCheckboxes = document.querySelectorAll(".secim-checkbox:checked");
+  const ids = Array.from(selectedCheckboxes).map(cb => cb.getAttribute("data-id"));
+
+  if (ids.length === 0) {
+    alert("Lütfen en az bir içerik seçin.");
+    return;
+  }
+
+  try {
+    const res = await fetch("/api/posts/undraft", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ ids })
+    });
+
+    const data = await res.json();
+
+    if (res.ok) {
+      alert("Seçilen içerikler taslaktan çıkarıldı.");
+      loadContents(); // tabloyu yenile
+    } else {
+      alert("Hata: " + (data.error || "Bilinmeyen bir hata"));
+    }
+  } catch (err) {
+    console.error("Taslaktan çıkarma hatası:", err);
+    alert("Sunucu hatası.");
+  }
+});
+
+
+// TOPLU SİLME
+document.getElementById("topluSilBtn").addEventListener("click", async () => {
+  const selectedCheckboxes = document.querySelectorAll(".secim-checkbox:checked");
+  const ids = Array.from(selectedCheckboxes).map(cb => cb.getAttribute("data-id"));
+
+  if (ids.length === 0) {
+    alert("Lütfen en az bir içerik seçin.");
+    return;
+  }
+
+  const confirmDelete = confirm("Seçilen içerikleri silmek istediğinize emin misiniz?");
+  if (!confirmDelete) return;
+
+  try {
+    const res = await fetch("/api/posts/delete-multiple", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ ids })
+    });
+
+    const data = await res.json();
+
+    if (res.ok) {
+      alert("Seçilen içerikler silindi.");
+      loadContents(); // tabloyu yenile
+    } else {
+      alert("Hata: " + (data.error || "Bilinmeyen hata"));
+    }
+  } catch (err) {
+    console.error("Toplu silme hatası:", err);
+    alert("Sunucu hatası.");
+  }
+});
+
+
 
 // Silme onayı modal butonu
 document.getElementById("confirmDeleteBtn").addEventListener("click", async () => {

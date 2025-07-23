@@ -124,12 +124,19 @@
       <table class="table table-striped">
         <thead>
           <tr>
+            <th>Seç</th>
             <th>Başlık</th>
             <th>İçerik</th>
+            
           </tr>
         </thead>
         <tbody id="contentsTableBody">
-          
+          <div class="d-flex justify-content-end mb-2">
+          <button id="topluSilBtn" class="btn btn-danger text-light">Seçilenleri Sil</button>
+          <button id="taslakYapBtn" class="btn btn-warning ms-2 text-light">Seçilenleri Taslak Yap</button>
+          <button id="taslaktanCikarBtn" class="btn btn-success ms-2 text-light">Taslaktan Çıkar</button>
+</div>
+
         </tbody>
       </table>
     </div>
@@ -162,6 +169,7 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Vazgeç</button>
         <button type="button" id="confirmDeleteBtn" class="btn btn-danger">Evet, Sil</button>
+        
       </div>
     </div>
   </div>

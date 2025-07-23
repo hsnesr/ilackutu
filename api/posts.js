@@ -191,8 +191,13 @@ export default async function handler(req, res) {
             const pageNum = parseInt(page, 10) || 1;
             const limitNum = parseInt(limit, 10) || 9;
 
+            const isAdmin = req.query.admin === "true";
+
             let query = supabase.from("posts").select("*").order("created_at", { ascending: false });
 
+        if (!isAdmin) {
+        query = query.eq("taslak", false);
+}
 
 
             if (search) {
