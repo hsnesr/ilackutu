@@ -15,7 +15,6 @@ export default function handler(req, res) {
   if (!username || !password) {
     return res.status(400).json({ error: "Kullanıcı adı ve şifre gerekli." });
   }
-
   if (username === ADMIN_USER && password === ADMIN_PASS) {
     const token = jwt.sign({ username }, JWT_SECRET, { expiresIn: "1h" }); // 1 saat geçerli
     return res.status(200).json({ token });
