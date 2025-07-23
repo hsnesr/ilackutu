@@ -304,6 +304,7 @@ document.getElementById("taslakYapBtn").addEventListener("click", () => {
       });
       const data = await res.json();
 
+      
       if (res.ok) {
         showModal("Seçilen içerikler başarıyla taslak yapıldı.", loadContents);
       } else {
