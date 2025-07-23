@@ -10,7 +10,17 @@
     },
     {
       "source": "/:slug",
+      "has": [
+        {
+          "type": "query",
+          "key": "slug"
+        }
+      ],
       "destination": "/post.html"
+    },
+    {
+      "source": "/:slug",
+      "destination": "/post.html?slug=:slug"
     }
   ]
 }

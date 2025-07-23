@@ -37,7 +37,7 @@
 
                 document.title = post.title + " - İlaç Kutusu";
                 container.innerHTML = `
-            <h1>${post.title}</h1>
+            <h1 class="sticky-top top-0 ps-3 bg-white blur-bg">${post.title}</h1>
             <p class="text-muted bg-light">${new Date(post.created_at).toLocaleDateString()}</p>
             ${post.media_urls && post.media_urls.length > 0 
     ? post.media_urls.map(url => `<img src="${url}" alt="Post image" style="max-width:100%;margin-top:1rem;border-radius:12px;" />`).join("")

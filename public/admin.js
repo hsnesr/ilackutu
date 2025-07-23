@@ -200,21 +200,30 @@ async function loadContents() {
 
   row.innerHTML = `
   <td><input type="checkbox" class="secim-checkbox" data-id="${post.id}"></td>
-  <td><span class="title-cell">${post.title}</span></td>
+  <td class="w-25"><span class="title-cell">${post.title}</span></td>
   <td>
-    <div class="content-preview content-cell">${post.content}</div>
+    <div class="content-preview content-cell" style="display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;min-height: 100px; height: 100%;">${post.content}</div>
   </td>
-  <td class="text-end">
-  ${isDraft ? '<span class="badge bg-secondary">Taslak</span>' : ''}
-    <button class="btn btn-sm btn-primary edit-btn" 
+  
+  <td class="text-end w-25 align-middle">
+  <div class="d-flex flex-wrap justify-content-end gap-2">
+    ${isDraft ? '<span class="badge bg-secondary align-self-center">Taslak</span>' : ''}
+    <button class="btn btn-sm btn-primary edit-btn"
       data-id="${post.id}" 
       data-title="${escapeHtml(post.title)}" 
       data-content="${escapeHtml(post.content)}"
       data-tags="${post.tags}">
       İçeriği Düzenle
     </button>
-    <button class="btn btn-sm btn-danger delete-btn" data-id="${post.id}">İçeriği Sil</button>
-  </td>
+    <button class="btn btn-sm btn-danger delete-btn" data-id="${post.id}">
+      İçeriği Sil
+    </button>
+  </div>
+</td>
+
 `;
 
 
