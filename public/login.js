@@ -11,6 +11,7 @@ async function login() {
     return;
   }
 
+  
   try {
     const res = await fetch("/api", {
       method: "POST",
