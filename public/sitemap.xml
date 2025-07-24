@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset
-  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<url>
   <loc>https://ilackutusu.com</loc>
   
   <changefreq>daily</changefreq>
@@ -24,5 +23,17 @@
   
   <changefreq>monthly</changefreq>
   <priority>0.6</priority>
+</url>
+<url>
+  <loc>https://ilackutusu.com/yazilar/123</loc>
+  <lastmod>2025-07-24T12:37:00.211Z</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.7</priority>
+</url>
+<url>
+  <loc>https://ilackutusu.com/yazilar/22</loc>
+  <lastmod>2025-07-24T12:39:47.607Z</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.7</priority>
 </url>
 </urlset>

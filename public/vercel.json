@@ -21,6 +21,10 @@
     {
       "source": "/:slug",
       "destination": "/post.html?slug=:slug"
+    },
+    {
+    "source": "/sitemap.xml",
+    "destination": "/api/sitemap"
     }
   ]
 }
