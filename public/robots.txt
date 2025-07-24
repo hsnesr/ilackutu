@@ -18,5 +18,5 @@ Disallow: /login.html
 Disallow: /admin.html
 
 # Site haritası
-Sitemap: https://ilackutusu.com/api/sitemap
+Sitemap: https://ilackutusu.com/sitemap.xml
 
