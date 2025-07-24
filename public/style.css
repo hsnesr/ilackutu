@@ -14,13 +14,13 @@ body main a:hover {
 }
 
 /* TABLOLAR */
-#contentEditor table {
+table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 10px;
 }
 
-#contentEditor th, #contentEditor td {
+table th, table td {
   border: 1px solid #ccc;
   padding: 8px;
   text-align: left;
@@ -60,6 +60,7 @@ body#egzersizsporbody #postsContainer .card
   min-height: 133px!important;
   max-height: 133px!important;
   height: 133px!important;
+  overflow: hidden!important;
 }
 body#beslenmevediyetbody #postsContainer .card-body,
 body#saglikliyasambody #postsContainer .card-body,
