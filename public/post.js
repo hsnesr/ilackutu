@@ -45,7 +45,6 @@
             <div id="PostContentLyrics">${post.content}</div>
             <div class="tags">${post.tags}</div>
         `;
-
                 // 🌟 MEDYA URL varsa resmi göster
                 // ÜSTTEKİ KODLA AYNI İŞLEVİ GÖRÜYOR
                 /*if (post.media_urls && post.media_urls.length > 0) {
