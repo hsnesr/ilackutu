@@ -14,13 +14,13 @@ body main a:hover {
 }
 
 /* TABLOLAR */
-table {
+#postbody table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 10px;
 }
 
-table th, table td {
+#postbody table th, #postbody table td {
   border: 1px solid #ccc;
   padding: 8px;
   text-align: left;
@@ -36,7 +36,7 @@ input[type="search"]::-webkit-search-cancel-button {
 body {
   font-family: 'Roboto', sans-serif;
   font-weight: 500;
-  font-size: 1.1rem;
+  font-size: 1rem;
   background: #F1F1F1;
   color: #1C1C1C;
 }

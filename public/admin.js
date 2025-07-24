@@ -33,7 +33,7 @@ document.getElementById("logoutBtn").addEventListener("click", () => {
 const contentEditor = document.getElementById("contentEditor");
 
 // PARAGRAFI OTOMATİK P TAGINA AL
-        function convertDivsToParagraphs(html) {
+      /*  function convertDivsToParagraphs(html) {
   const container = document.createElement("div");
   container.innerHTML = html;
 
@@ -58,7 +58,7 @@ const contentEditor = document.getElementById("contentEditor");
   newChildren.forEach(child => container.appendChild(child));
 
   return container.innerHTML;
-}
+}*/
 
 // İçerik formu gönderimi
 document.getElementById("contentForm").addEventListener("submit", async (e) => {
