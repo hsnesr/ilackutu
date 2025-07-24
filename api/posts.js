@@ -197,7 +197,7 @@ export default async function handler(req, res) {
             let query = supabase.from("posts").select("*").order("created_at", { ascending: false });
 
         if (!isAdmin) {
-        query = query.eq("taslak", false);
+        query = query.eq("is_draft", false);
 }
 
 

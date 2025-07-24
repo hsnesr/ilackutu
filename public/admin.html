@@ -40,15 +40,25 @@
     <!-- İçerik Ekle Sekmesi -->
     <div class="tab-pane fade show active" id="content" role="tabpanel" aria-labelledby="content-tab">
       <h3>📄 Yeni İçerik Ekle</h3>
+
+      <div class="btn-group my-2 d-flex" role="group">
+  <button type="button" class="btn btn-outline-secondary btn-sm" id="toggleDesign">Tasarım</button>
+  <button type="button" class="btn btn-outline-secondary btn-sm" id="toggleHTML">HTML</button>
+</div>
+
+<textarea id="htmlView" class="form-control" style="min-height:250px; display:none; background: #F1F1F1;"></textarea>
+
+
       <form id="contentForm">
           <input type="hidden" id="editId" />
           <div class="mb-3">
               <label for="title" class="form-label">Başlık</label>
               <input type="text" class="form-control" id="title"/>
           </div>
+
           <div class="mb-3">
               <label for="content" class="form-label">İçerik</label>
-              <div id="contentEditor" contenteditable="true" class="form-control" style="min-height: 150px; overflow-y: auto;"></div>
+              <div id="contentEditor" contenteditable="true" class="form-control" style="min-height: 250px; overflow-y: auto;"></div>
               <div id="toolbar" class="btn-toolbar flex-wrap gap-2 my-3" role="toolbar">
 
   <!-- Biçimlendirme -->
@@ -95,22 +105,19 @@
     <button type="button" class="btn btn-outline-primary btn-sm" id="insertImageBtn">Resim (URL)</button>
   </div>
 
-
 </div>
-
 
 <div class="mb-3">
   <label for="tags" class="form-label">Etiketler (virgülle ayır)</label>
   <input type="text" class="form-control" id="tags" placeholder="örnek: eğitim, teknoloji" />
 </div>
-
-
-
-
           </div>
-          <button type="submit" class="btn btn-success">Paylaş</button>
-          <button type="button" class="btn btn-primary" id="mediaBtn">Öne Çıkan Resim Ekle</button>
-          <button type="button" id="cancelEditBtn" class="btn btn-danger ms-2 d-none">Vazgeç</button>
+
+<div class="btn-group d-flex">
+          <button type="submit" class="btn btn-outline-success">Gönderiyi Paylaş</button>
+          <button type="button" class="btn btn-outline-primary" id="mediaBtn">Öne Çıkan Görsel</button>
+          </div>
+          <button type="button" id="cancelEditBtn" class="btn btn-outline-danger d-none w-100 mt-2">Değişikliklerden Vazgeç</button>
 
           <input type="file" id="mediaInput" accept="image/*,video/*" class="d-none" multiple />
           <div id="mediaPreview" class="d-flex flex-wrap gap-3 mt-3 mb-3"></div>
@@ -156,7 +163,7 @@
   </div>
 </div>
 <!-- Silme Onay Modali -->
-<div class="modal fade" id="deleteConfirmModal" tabindex="-1" aria-labelledby="deleteConfirmLabel" aria-hidden="true">
+<div class="modal fade" id="deleteConfirmModal" tabindex="-1" aria-labelledby="deleteConfirmLabel">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header bg-white text-black">
@@ -176,7 +183,7 @@
 </div>
 
 <!-- Ortak Modal (Tek modal, dinamik içerik için kullanılabilir) -->
-<div class="modal fade" id="actionConfirmModal" tabindex="-1" aria-labelledby="actionConfirmModalLabel" aria-hidden="true">
+<div class="modal fade" id="actionConfirmModal" tabindex="-1" aria-labelledby="actionConfirmModalLabel">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -197,6 +204,7 @@
  <script src="/common.js"></script>
  <script src="/admin.js"></script>
  <script src="/libs/bootstrap/bootstrap.bundle.min.js"></script>
+
 
 </body>
 </html>

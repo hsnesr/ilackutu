@@ -143,6 +143,27 @@ toolbar.addEventListener("click", (e) => {
   }
 });
 
+/* HTMML GÖRÜNÜM */
+document.addEventListener("DOMContentLoaded", () => {
+  const htmlView = document.getElementById("htmlView");
+  const toggleHTML = document.getElementById("toggleHTML");
+  const toggleDesign = document.getElementById("toggleDesign");
+
+  if (toggleHTML && toggleDesign && htmlView && contentEditor) {
+    toggleHTML.addEventListener("click", () => {
+      htmlView.value = contentEditor.innerHTML;
+      contentEditor.style.display = "none";
+      htmlView.style.display = "block";
+    });
+
+    toggleDesign.addEventListener("click", () => {
+      contentEditor.innerHTML = htmlView.value;
+      htmlView.style.display = "none";
+      contentEditor.style.display = "block";
+    });
+  }
+});
+
 
 
 // İptal Et Butonu click => clean form
