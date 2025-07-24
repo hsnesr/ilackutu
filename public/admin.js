@@ -122,6 +122,43 @@ insertImageBtn.addEventListener("click", () => {
   }
 });
 
+const insertTableBtn = document.getElementById("insertTableBtn");
+insertTableBtn?.addEventListener("click", () => {
+  const tableHTML = `
+    <table border="1" style="width:100%; border-collapse: collapse;">
+      <thead>
+        <tr>
+          <th>Başlık 1</th>
+          <th>Başlık 2</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Veri 1</td>
+          <td>Veri 2</td>
+        </tr>
+      </tbody>
+    </table><br>`;
+  
+  const sel = window.getSelection();
+  if (!sel.rangeCount) return;
+
+  const range = sel.getRangeAt(0);
+  range.deleteContents();
+
+  const temp = document.createElement("div");
+  temp.innerHTML = tableHTML;
+  const frag = document.createDocumentFragment();
+  let node;
+  while ((node = temp.firstChild)) {
+    frag.appendChild(node);
+  }
+
+  range.insertNode(frag);
+  contentEditor.focus();
+});
+
+
 const toolbar = document.getElementById("toolbar");
 
 toolbar.addEventListener("click", (e) => {

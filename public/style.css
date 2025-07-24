@@ -13,6 +13,20 @@ body main a:hover {
   text-decoration: underline;
 }
 
+/* TABLOLAR */
+#contentEditor table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+#contentEditor th, #contentEditor td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: left;
+}
+
+
 /* Chrome, Safari, Edge ARAMA KUTUSU ÇARPI İŞARETİ */
 input[type="search"]::-webkit-search-cancel-button {
   display: none;
