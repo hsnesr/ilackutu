@@ -7,7 +7,7 @@
     "start": "vercel dev",
     "test": "echo \"Error: no test specified\" && exit 1",
     "generate-sitemap": "node scripts/generate-sitemap.js",
-    "vercel-build": "npm run generate-sitemap && vercel build"
+    "vercel-build": "npm run generate-sitemap"
   },
   "keywords": [],
   "author": "",
