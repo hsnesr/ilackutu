@@ -107,7 +107,7 @@ window.initSearch = () => {
 
     const query = input.value.trim();
     if (!query) {
-      results.innerHTML = '<p class="text-danger">Lütfen arama terimi girin.</p>';
+      results.innerHTML = '<p class="alert alert-warning">Lütfen arama terimi girin.</p>';
       return;
     }
 
@@ -123,7 +123,7 @@ window.initSearch = () => {
       }
 
       if (data.length === 0) {
-        results.innerHTML = `<p class="alert alert-warning">Sonuç bulunamadı.</p>`;
+        results.innerHTML = `<p class="alert alert-danger">Sonuç bulunamadı.</p>`;
         return;
       }
 
@@ -146,3 +146,5 @@ window.initSearch = () => {
     }
   });
 };
+
+

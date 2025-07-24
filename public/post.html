@@ -12,11 +12,12 @@
 </head>
 <body id="postbody" class="bg-light">
     <div id="progressBar"></div>
-    <!-- Navbar -->
-    <div id="navbar-placeholder" class="bg-light d-flex justify-content-evenly"></div>
 
     <!-- Header -->
-    <header id="header-placeholder"></header>
+    <header id="header-placeholder" style="display:none;"></header>
+
+    <!-- Navbar -->
+    <div id="navbar-placeholder" class="bg-white w-100 shadow-sm sticky-top top-0   d-flex justify-content-evenly"></div>
 
        <!-- Cookie Card (Top Sticky) -->
 <div id="cookieBanner" class="position-sticky top-0 w-100 container" style="z-index: 1080;">
@@ -25,7 +26,8 @@
       <span class="me-3">Bu site çerezleri kullanır. Devam ederek çerezleri kabul etmiş olursunuz.</span>
       <div class="d-flex">
         <button id="acceptCookies" class="btn btn-primary btn-sm me-2" onclick="acceptCookies()">Kabul Et</button>
-        <button id="rejectCookies" class="btn btn-outline-secondary btn-sm" onclick="declineCookies()">Reddet</button>
+        <a href="/gizlilik-politikasi.html" class="fs-6 pt-1">Detaylar</a>
+        <!--<button id="rejectCookies" class="btn btn-outline-secondary btn-sm" onclick="declineCookies()">Reddet</button>-->
       </div>
     </div>
   </div>

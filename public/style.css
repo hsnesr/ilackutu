@@ -5,25 +5,30 @@
     margin:0;
     padding: 0;
 }
-
 body main a {
   text-decoration: none;
-  color: #3F51B5;
+  color: #0d6efd;
 }
 body main a:hover {
   text-decoration: underline;
+}
+
+/* Chrome, Safari, Edge ARAMA KUTUSU ÇARPI İŞARETİ */
+input[type="search"]::-webkit-search-cancel-button {
+  display: none;
+  -webkit-appearance: none;
 }
 
 body {
   font-family: 'Roboto', sans-serif;
   font-weight: 500;
   font-size: 1.1rem;
-  background: #F0F0F0;
-  color: #1c1c1c;
+  background: #F1F1F1;
+  color: #1C1C1C;
 }
 ul.navbar-nav a{
   font-family: 'Roboto', sans-serif;
-  font-size: 1.3rem;
+  font-size: 1.2rem;
 }
 /* Dropdown item üzerine gelindiğinde (hover veya klavyeyle focus) */
 
@@ -32,21 +37,9 @@ nav.navbar .dropdown-item:focus {
   color: #1c1c1c; /* Yazı rengini de istersen değiştirebilirsin */
 }
 
-
-.blur-bg {
-  backdrop-filter: blur(8px);
-  background-color: rgba(255, 255, 255, 0.8)!important; /* biraz saydamlık */
-}
-
 /* STATIK SAYFALAR */
-body#egitimbody main.container .card,
-body#saglikliyasambody main.container .card,
-body#egzersizsporbody main.container .card {
-  box-shadow: none!important;
-  background: transparent!important;
-}
 
-body#egitimbody #postsContainer .card,
+body#beslenmevediyetbody #postsContainer .card,
 body#saglikliyasambody #postsContainer .card,
 body#egzersizsporbody #postsContainer .card
 {
@@ -54,25 +47,28 @@ body#egzersizsporbody #postsContainer .card
   min-height: 133px!important;
   max-height: 133px!important;
   height: 133px!important;
-  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.050)!important;
 }
-body#egitimbody #postsContainer .card-body,
+body#beslenmevediyetbody #postsContainer .card-body,
 body#saglikliyasambody #postsContainer .card-body,
 body#egzersizsporbody #postContainer .card-body {
   border-bottom: 1px solid #ddd!important;
 }
 
-body#egitimbody #postsContainer .card:last-child .card-body,
+body#beslenmevediyetbody #postsContainer .card:last-child .card-body,
 body#egzersizsporbody #postsContainer .card:last-child .card-body,
 body#body#saglikliyasambody #postsContainer .card:last-child .card-body {
   border-bottom: none!important;
 }
 
-body#egitimbody #postsContainer .card:last-child,
+body#beslenmevediyetbody #postsContainer .card:last-child,
 body#saglikliyasambody #postsContainer .card:last-child,
 body#egzersizsporbody #postsContainer .card:last-child {
   margin-bottom: 0!important;
 }
+
+.alert-coral {background: #E63946;color: #F4F4F4;}
+.alert-amber {background: #FFC107;color: #F4F4F4;}
+.alert-lavender {background: #9B59B6;color: #F4F4F4;}
 
 
 body#indexbody h5.card-title {
@@ -84,11 +80,11 @@ body#indexbody h5.card-title {
 }
 
 body#indexbody #posts .card {
-height: 300px;
-overflow: hidden;
-transition: 300ms all;
-box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
-border: none;
+    overflow: hidden;
+    min-height: 125px;
+    max-height: 125px;
+    height: 125px;
+    border: none;
 }
 
 
@@ -104,7 +100,7 @@ body#egitimbody .card-text{
     display: none;
 }
 
-body#indexbody .text-muted {transition: 300ms all;}
+body#indexbody .text-muted {color: white}
 body#indexbody .card:hover .text-muted {}
 
 body#postbody div#PostContentLyrics {
@@ -117,10 +113,12 @@ body#postbody div#PostContentLyrics {
     left: 0;
     height: 3px;
     width: 0%;
-    background-color: rgb(33 37 41);
+    background-color: #0d6efd;
     z-index: 9999;
     transition: width 0.4s ease;
-
+}
+body#indexbody #progressBar{
+    background-color: #F4F4F4;
 }
 
 /* TOOLBAR BUTONLARI */

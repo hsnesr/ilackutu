@@ -23,11 +23,13 @@
   
     <div id="progressBar"></div>
 
-    <!-- Navbar -->
-    <div id="navbar-placeholder" class="bg-light w-100 d-flex justify-content-evenly"></div>
-
-    <!-- Header -->
+       <!-- Header -->
     <header id="header-placeholder"></header>
+
+    <!-- Navbar -->
+    <div id="navbar-placeholder" class="bg-white w-100 shadow-sm sticky-top top-0   d-flex justify-content-evenly"></div>
+
+ 
 
        <!-- Cookie Card (Top Sticky) -->
 <div id="cookieBanner" class="position-sticky top-0 w-100 container" style="z-index: 1080;">
@@ -36,25 +38,27 @@
       <span class="me-3">Bu site çerezleri kullanır. Devam ederek çerezleri kabul etmiş olursunuz.</span>
       <div class="d-flex">
         <button id="acceptCookies" class="btn btn-primary btn-sm me-2" onclick="acceptCookies()">Kabul Et</button>
-        <button id="rejectCookies" class="btn btn-outline-secondary btn-sm" onclick="declineCookies()">Reddet</button>
+        <a href="/gizlilik-politikasi.html" class="btn btn-outline-seconday btn-sm me-2">Detaylar</a>
+        <!--<button id="rejectCookies" class="btn btn-outline-secondary btn-sm" onclick="declineCookies()">Reddet</button>-->
       </div>
     </div>
   </div>
 </div>
+
     <!-- Search-->
-     <div id="searchres" class="container w-75 mx-auto mt-4">
-    <div class="card w-75 mx-auto border-0">
-  <div class="card-body w-100 mx-auto pb-2 shadow-sm">
-    <form id="searchForm" class="mx-auto d-flex mt-2 mb-3">
+     <div id="searchres" class="container w-100 mx-auto mt-4">
+    <div class="card w-75 mx-auto border-0 shadow-sm">
+  <div class="card-body w-100 mx-auto pb-2">
+    <form id="searchForm" class="mx-auto d-flex mt-2 mb-3 invalid-feedback">
     <input
       type="search"
       id="searchInput"
       class="form-control me-2"
       placeholder="Arama yapın..."
       aria-label="Arama"
-      required
     />
-    <button type="submit" class="btn btn-outline-dark"><i class="bi bi-search"></i></button>
+    <button type="submit" class="btn btn-primary"><i class="bi bi-search"></i></button>
+  
   </form>   
 
     <div id="results"></div>
