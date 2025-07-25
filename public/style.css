@@ -201,28 +201,70 @@ tbody#contentsTableBody img {
 }
 
 /* RESPONSİVE */
-@media (max-width: 1050px) {
-  #navbar-placeholder {
-    position: sticky;
-    top: 0;
-    z-index: 1020; /* Navbar için genelde yeterlidir */
-    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+/* Küçük ekranlar (mobil) için */
+@media (max-width: 576px) {
+  #searchForm {
+    flex-direction: column;
+    gap: 0.5rem;
   }
-  #searchres 
-  #postDetail img {
-    height: 200px!important;
-    width: 100%; /* Oran bozulmasın diye */
-  }
-  .container, nav.navbar {
-    width: 100%!important;
-  }
+
   #cookieBanner .card {
-    width: 75%!important;
-    bottom: 0!important;
-    font-size: .75rem!important;
-    position:sticky!important;
+    width: 100% !important;
+    font-size: 0.85rem;
   }
-  #cookieBanner .card button {font-size: .75rem!important;width: 75px!important;}
-  main.container {min-width:100%!important;margin:0!important;}
-  main.container .row {min-width:100%!important;margin:0!important;}
+
+  #navbar-placeholder {
+    flex-direction: column;
+    align-items: center;
+    padding: 0.75rem 0;
+    gap: 0.25rem;
+  }
+
+  #postDetail {
+    padding: 1rem;
+  }
+
+  .card-body {
+    padding: 1rem;
+  }
+
+  #searchInput {
+    width: 100%;
+  }
+
+  .btn {
+    width: 100%;
+  }
+  #postDetail {
+  font-size: 0.875rem; /* daha küçük (yaklaşık 14px) */
+}
+}
+
+/* Orta ekranlar (tablet) */
+@media (min-width: 577px) and (max-width: 768px) {
+  #navbar-placeholder {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  #cookieBanner .card {
+    width: 90% !important;
+  }
+
+  .card-body {
+    padding: 1.25rem;
+  }
+}
+
+/* Büyük ekranlar (masaüstü) */
+@media (min-width: 769px) {
+  #main-placeholder {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  .card {
+    transition: box-shadow 0.2s ease-in-out;
+  }
 }
