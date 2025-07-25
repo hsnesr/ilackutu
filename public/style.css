@@ -197,6 +197,10 @@ body#indexbody .text-muted {
   margin: 50px auto;
 }
 
+#navbar-placeholder {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.175);
+}
+
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
@@ -215,7 +219,7 @@ main.container .mx-auto,
 main.container .row,
 main.container .w-75 {
     width:100%!important;
-    margin: 0 auto!important;
+    margin: 2rem auto!important;
   }
 
   #cookieBanner .card {
@@ -253,7 +257,7 @@ main.container .w-75 {
   body#iletisim main.container,
 body#telif-hakki main.container,
 body#gizlilik-politikasi main.container {
-    width:75%!important;
+    width:100%!important;
     margin: 2rem auto!important;
 }
 }
