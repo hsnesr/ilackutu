@@ -110,6 +110,11 @@ body#indexbody #posts .card {
   border: none;
 }
 
+#posts .card img, #postsContainer .card img{
+  min-height: 120px!important;
+  height: 120px!important;
+}
+
 body#indexbody .card-text,
 body#egzersizspor .card-text,
 body#saglikliyasambody .card-text,
