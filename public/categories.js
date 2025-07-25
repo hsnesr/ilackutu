@@ -26,7 +26,7 @@ async function fetchPostsByTag(tag) {
 
     posts.forEach(post => {
       const div = document.createElement("div");
-      div.classList.add("card", "mb-3");
+      div.classList.add("card", "mb-3", "border-0");
 
       div.innerHTML = `
         <div class="col-md-12 col-lg-12">

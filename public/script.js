@@ -62,7 +62,7 @@ async function loadPosts(page = 1, search = "", limitParam) {
             return `
             <div class="col-md-12 col-lg-12">
   <a href="/${post.slug}" class="text-decoration-none text-dark">
-    <div class="card shadow-sm">
+    <div class="card border">
       <div class="row g-0 h-100">
         <!-- Sol: Resim -->
         <div class="col-4">
