@@ -94,11 +94,10 @@ body#indexbody h5.card-title {
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-weight: 500;
 }
 
 body#indexbody #posts .card {
-  min-height: 125px;
-  max-height: 125px;
   overflow: hidden;
   border: none;
 }
