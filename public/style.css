@@ -75,13 +75,13 @@ input[type="search"]::-webkit-search-cancel-button {
 }
 
 /* Table Styling */
-#postbody table {
+#postbody table{
   width: 100%;
   border-collapse: collapse;
   margin-top: 10px;
 }
 
-#postbody table th, #postbody table td {
+#postbody table th, #adminbody th, #postbody table td, #adminbody td {
   border: 1px solid #ccc;
   padding: 8px;
   text-align: left;
@@ -128,9 +128,12 @@ body#indexbody .text-muted {
   text-align: left;
 }
 
-#postDetail h1, #postDetail h2, #postDetail h3, #postDetail h4 {
+#postDetail h1, #postDetail h2, #postDetail h3, #postDetail h4,
+#postDetail h1 b, #postDetail h2 b, #postDetail h3 b, #postDetail h4 b {
   padding: 0.5rem 0;
   text-align: left;
+  font-weight: 600;
+  font-size: 2rem;
 }
 
 #postDetail p.text-muted {
