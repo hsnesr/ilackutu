@@ -204,6 +204,11 @@ body#indexbody .text-muted {
     flex-direction: column;
     gap: 0.5rem;
   }
+  #postbody main.container .mx-auto, #saglikliyasambody main.container .mx-auto,
+  #postbody main.container .row, #saglikliyasambody main.container .row,
+  #postbody main.container .w-75, #saglikliyasambody main.container .w-75 {
+    width:100%!important;
+  }
 
   #cookieBanner .card {
     width: 100% !important;
@@ -245,6 +250,12 @@ body#indexbody .text-muted {
     justify-content: center;
     gap: 1rem;
   }
+  #postbody main.container .mx-auto, #saglikliyasambody main.container .mx-auto,
+  #postbody main.container .row, #saglikliyasambody main.container .row,
+  #postbody main.container .w-75, #saglikliyasambody main.container .w-75 {
+    width:100%!important;
+  }
+
 
   #cookieBanner .card {
     width: 90% !important;
@@ -259,9 +270,5 @@ body#indexbody .text-muted {
   #main-placeholder {
     padding-left: 1.5rem;
     padding-right: 1.5rem;
-  }
-
-  .card {
-    transition: box-shadow 0.2s ease-in-out;
   }
 }

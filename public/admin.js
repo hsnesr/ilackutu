@@ -263,7 +263,7 @@ async function loadContents() {
     <div class="content-preview content-cell" style="display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
-  overflow: hidden;min-height: 100px; height: 100%;">${post.content}</div>
+  overflow: hidden;">${post.content}</div>
   </td>
   
   <td class="text-end w-25 align-middle">
