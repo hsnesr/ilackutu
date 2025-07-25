@@ -217,14 +217,15 @@ body#indexbody .text-muted {
     flex-direction: column;
     gap: 0.5rem;
   }
-
+body#postbody main.container .row {margin: 2rem auto!important;}  
+main.container .row img {margin:0!important;}
 body#indexbody #searchres .w-75,
 main.container,
 main.container .mx-auto, 
 main.container .row,
 main.container .w-75 {
     width:100%!important;
-    margin: 2rem auto!important;
+    margin: 0 auto!important;
   }
 
   #cookieBanner .card {
