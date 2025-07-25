@@ -1,19 +1,80 @@
+/* Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
-* {
-    margin:0;
-    padding: 0;
+/* Reset */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
-body main a {
-  text-decoration: none;
+
+html, body {
+  height: 100%;
+  font-family: 'Roboto', sans-serif;
+  background: #F1F1F1;
+  color: #1C1C1C;
+  line-height: 1.6;
+  scroll-behavior: smooth;
+}
+
+a {
   color: #0d6efd;
+  text-decoration: none;
 }
-body main a:hover {
+a:hover {
   text-decoration: underline;
 }
 
-/* TABLOLAR */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+ul, ol {
+  /*list-style: none;*/
+}
+
+button, input, textarea, select {
+  font: inherit;
+  border: none;
+  outline: none;
+  background: none;
+}
+
+button {
+  cursor: pointer;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  line-height: 1.2;
+  margin-bottom: 0.5rem;
+}
+
+p {
+  margin-bottom: 1rem;
+}
+
+/* Typography */
+body {
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+b, strong, span {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+/* Search Input */
+input[type="search"]::-webkit-search-cancel-button {
+  display: none;
+  -webkit-appearance: none;
+}
+
+/* Table Styling */
 #postbody table {
   width: 100%;
   border-collapse: collapse;
@@ -26,151 +87,102 @@ body main a:hover {
   text-align: left;
 }
 
-
-/* Chrome, Safari, Edge ARAMA KUTUSU ÇARPI İŞARETİ */
-input[type="search"]::-webkit-search-cancel-button {
-  display: none;
-  -webkit-appearance: none;
-}
-
-body {
-  font-family: 'Roboto', sans-serif!important;
-  font-weight: 500!important;
-  font-size: 1.2rem!important;
-  background: #F1F1F1!important;
-  color: #1C1C1C!important;
-}
-b, strong, span {font-size:1.2rem!important}
-ul.navbar-nav a{
-  font-family: 'Roboto', sans-serif;
-}
-/* Dropdown item üzerine gelindiğinde (hover veya klavyeyle focus) */
-
-nav.navbar .dropdown-item:focus {
-  background-color: #ddd; /* Örneğin mor */
-  color: #1c1c1c; /* Yazı rengini de istersen değiştirebilirsin */
-}
-
-/* STATIK SAYFALAR */
-
-body#beslenmevediyetbody #postsContainer .card,
-body#saglikliyasambody #postsContainer .card,
-body#egzersizsporbody #postsContainer .card
-{
-  border: none!important;
-  min-height: 133px!important;
-  max-height: 133px!important;
-  height: 133px!important;
-  overflow: hidden!important;
-}
-body#beslenmevediyetbody #postsContainer .card-body,
-body#saglikliyasambody #postsContainer .card-body,
-body#egzersizsporbody #postContainer .card-body {
-  border-bottom: 1px solid #ddd!important;
-}
-
-body#beslenmevediyetbody #postsContainer .card:last-child .card-body,
-body#egzersizsporbody #postsContainer .card:last-child .card-body,
-body#body#saglikliyasambody #postsContainer .card:last-child .card-body {
-  border-bottom: none!important;
-}
-
-body#beslenmevediyetbody #postsContainer .card:last-child,
-body#saglikliyasambody #postsContainer .card:last-child,
-body#egzersizsporbody #postsContainer .card:last-child {
-  margin-bottom: 0!important;
-}
-
-.alert-coral {background: #E63946;color: #F4F4F4;}
-.alert-amber {background: #FFC107;color: #F4F4F4;}
-.alert-lavender {background: #9B59B6;color: #F4F4F4;}
-
-
+/* Post Card Ellipsis */
 body#indexbody h5.card-title {
   display: -webkit-box;
-  -webkit-line-clamp: 2;        
+  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 body#indexbody #posts .card {
-    overflow: hidden;
-    min-height: 125px;
-    max-height: 125px;
-    height: 125px;
-    border: none;
+  min-height: 125px;
+  max-height: 125px;
+  overflow: hidden;
+  border: none;
 }
-
 
 body#indexbody .card-text,
 body#egzersizspor .card-text,
 body#saglikliyasambody .card-text,
-body#egitimbody .card-text{
-    display: -webkit-box;
-    -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: none;
+body#egitimbody .card-text {
+  display: none;
 }
 
-body#indexbody .text-muted {color: white}
-body#indexbody .card:hover .text-muted {}
-
-body#postbody div#PostContentLyrics {
-  text-align: left!important;
-}
-
-#progressBar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 3px;
-    width: 0%;
-    background-color: #0d6efd;
-    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.025);
-    z-index: 9999;
-    transition: width 0.4s ease;
-}
-body#indexbody #progressBar{
-    background-color: #F4F4F4;
-    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.025);
-}
-
-/* TOOLBAR BUTONLARI */
-#toolbar .btn.active {
-  background-color: #333;
+body#indexbody .text-muted {
   color: white;
-  border-color: #111;
 }
 
-
-tbody#contentsTableBody tr td, tbody#contentsTableBody tr td h2, tbody#contentsTableBody tr td b {
-  font-weight: normal;
+/* Post Detail */
+#postDetail {
+  padding: 2rem;
+  font-family: 'Roboto', sans-serif;
   font-size: 1rem;
-  text-transform: capitalize;
 }
-tbody#contentsTableBody img {
-  display:none;
+
+#postDetail p {
+  font-size: 1rem;
+  line-height: 1.6rem;
+  font-weight: 400;
+  text-align: left;
+}
+
+#postDetail h1, #postDetail h2, #postDetail h3, #postDetail h4 {
+  padding: 0.5rem 0;
+  text-align: left;
+}
+
+#postDetail p.text-muted {
+  background: #f3f3f3;
+  border-radius: 4px;
+  padding: 0.25rem 0.5rem;
+}
+
+#postDetail p.text-muted:after {
+  content: " Tarihinde Yazıldı.";
+}
+
+#postDetail .tags {
+  text-align: left;
+  padding: 1rem 0;
 }
 
 #postDetail img {
   width: 100%;
-  height: 500px;
+  height: auto;
   object-fit: cover;
   object-position: center;
   border-radius: 12px;
-  margin: .25rem;
+  margin: 0.25rem 0;
 }
 
+/* Cookie Banner */
+#cookieBanner .card {
+  max-width: 100%;
+  font-size: 0.95rem;
+}
+
+/* Progress Bar */
+#progressBar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  width: 0%;
+  background-color: #0d6efd;
+  z-index: 9999;
+  transition: width 0.4s ease;
+}
+
+/* Loader */
 .blue-loader {
   width: 35px;
   height: 35px;
-  border: 4px solid #ccc;           /* Gri arka plan (boş olan kısım) */
-  border-top-color: rgb(33 37 41); 
-  border-right-color: rgb(33 37 41);          /* Siyah (dolu görünen dönen kısım) */
-  border-radius: 50%;               /* Daire */
+  border: 4px solid #ccc;
+  border-top-color: #212529;
+  border-right-color: #212529;
+  border-radius: 50%;
   animation: spin 1s linear infinite;
   margin: 50px auto;
 }
@@ -180,36 +192,12 @@ tbody#contentsTableBody img {
   100% { transform: rotate(360deg); }
 }
 
-
-
-#PostContentLyrics {padding-top: 1.5rem}
-#postDetail {padding: 2rem; font-family: 'Roboto', sans-serif;}
-#postDetail p {padding: 0;text-align: left;font-family: 'Roboto', sans-serif;font-weight: 500; line-height: 1.6rem;font-size: 1.2rem!important}
-#postDetail dl, #postDetail ol, #postDetail ul {margin: .5rem 0;font-family: 'Roboto', sans-serif;font-weight: 500;font-size: 1.3rem}
-#postDetail ol {font-size: 1.1rem!important}
-#postDetail h1, #postDetail h2, #postDetail h3, #postDetail h4 {text-align: left;padding: .5rem 0;}
-#postDetail p.text-muted {background: #f3f3f3; border-radius: 4px; padding: .25rem .5rem;}
-#postDetail p.text-muted:after {content: " Tarihinde Yazıldı."}
-#postDetail .tags {text-align: left; padding: 1rem 0; font-family: 'Roboto', sans-serif;}
-
-/* PANEL TAB */
-.tab-content {
-  border-radius: 0 6px 6px 6px!important;
-}
-
-@keyframes rotate {
-  100% {transform: rotate(-360deg);}
-}
-
-/* RESPONSİVE */
-/* Küçük ekranlar (mobil) için */
+/* Responsive */
 @media (max-width: 576px) {
   #searchForm {
     flex-direction: column;
     gap: 0.5rem;
   }
-
-  b, strong, span, p {font-size: 0.75rem!important}
 
   #cookieBanner .card {
     width: 100% !important;
@@ -223,27 +211,28 @@ tbody#contentsTableBody img {
     gap: 0.25rem;
   }
 
+  #searchInput, .btn {
+    width: 100%;
+  }
+
   #postDetail {
     padding: 1rem;
+    font-size: 0.875rem;
+  }
+
+  #postDetail p {
+    font-size: 0.85rem;
+  }
+
+  b, strong, span {
+    font-size: 0.875rem;
   }
 
   .card-body {
     padding: 1rem;
   }
-
-  #searchInput {
-    width: 100%;
-  }
-
-  .btn {
-    width: 100%;
-  }
-  #postDetail {
-  font-size: 0.875rem; /* daha küçük (yaklaşık 14px) */
-}
 }
 
-/* Orta ekranlar (tablet) */
 @media (min-width: 577px) and (max-width: 768px) {
   #navbar-placeholder {
     flex-wrap: wrap;
@@ -260,7 +249,6 @@ tbody#contentsTableBody img {
   }
 }
 
-/* Büyük ekranlar (masaüstü) */
 @media (min-width: 769px) {
   #main-placeholder {
     padding-left: 1.5rem;
@@ -269,5 +257,9 @@ tbody#contentsTableBody img {
 
   .card {
     transition: box-shadow 0.2s ease-in-out;
+  }
+
+  .card:hover {
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.07);
   }
 }
