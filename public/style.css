@@ -39,13 +39,14 @@ body#indexbody #progressBar{background: #FFF;}
 @keyframes spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
 @media(max-width:576px){
 #searchForm{flex-direction:column;gap:.5rem}
-body#postbody main.container .row{margin:2rem auto!important}
+body#postbody main.container .w-75{width:100%!important}
+body#indexbody main.container .w-75{width:100%!important}
 main.container .row img{margin:0!important}
 body#indexbody #searchres {width:100%!important;margin:2rem auto!important}
 #cookieBanner .card{width:100%!important;font-size:.85rem}
 #navbar-placeholder{flex-direction:column;align-items:center;padding:.75rem 0;gap:.25rem}
 #searchInput,.btn{width:100%}
-#postDetail{padding:1rem;font-size:.875rem}
+#postDetail{padding:1rem;font-size:.875rem;}
 #postDetail p{font-size:.85rem}
 b,strong,span{font-size:.875rem}
 .card-body{padding:1rem}
@@ -56,6 +57,8 @@ body#iletisim main.container,body#telif-hakki main.container,body#gizlilik-polit
 body#indexbody #searchres {width:100%!important;margin:2rem auto!important}
 #cookieBanner .card{width:90%!important}
 .card-body{padding:1.25rem}
+body#postbody main.container .w-75{width:100%!important}
+body#indexbody main.container .w-75{width:100%!important}
 body#iletisim main.container,body#telif-hakki main.container,body#gizlilik-politikasi main.container{width:75%!important;margin:2rem auto!important}
 }
 @media(min-width:769px){
