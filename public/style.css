@@ -31,8 +31,8 @@ body#indexbody .text-muted{color:white}
 #postDetail img{width:100%;height:auto;object-fit:cover;object-position:center;border-radius:12px;margin:.25rem 0}
 #cookieBanner .card{max-width:100%;font-size:.95rem}
 #progressBar{position:fixed;top:0;left:0;height:3px;width:0%;background-color:#0d6efd;z-index:9999;transition:width .4s ease}
-.blue-loader{width:35px;height:35px;border:4px solid #ccc;border-top-color:#212529;border-right-color:#212529;border-radius:50%;animation:spin 1s linear infinite;margin:50px auto}
-#navbar-placeholder{border-bottom:1px solid rgba(0,0,0,.175)}
+.blue-loader{width:35px;height:35px;border:4px solid transparent;border-left-color:#0d6efd;border-right-color:#0d6efd;border-radius:50%;animation:spin 1s linear infinite;margin:50px auto}
+#navbar-placeholder{/*border-bottom:1px solid rgba(0,0,0,.175)*/}
 @keyframes spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
 @media(max-width:576px){
 #searchForm{flex-direction:column;gap:.5rem}
