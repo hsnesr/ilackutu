@@ -25,7 +25,8 @@ body#indexbody .text-muted{color:white}
 #postDetail{padding:2rem;font-family:'Roboto',sans-serif;font-size:1rem}
 #postDetail p{font-size:1rem;line-height:1.6rem;font-weight:400;text-align:left}
 #postDetail h1,#postDetail h2,#postDetail h3,#postDetail h4,#postDetail h1 b,#postDetail h2 b,#postDetail h3 b,#postDetail h4 b{padding:.5rem 0;text-align:left;font-weight:600;font-size:1.75rem}
-#contentEditor *{font-size:inherit!important;font-weight:inherit!important;margin:0!important;}
+#contentEditor h1{font-size:2.25rem!important}#contentEditor h2{font-size:2rem!important}#contentEditor h3{font-size:1.75rem!important}#contentEditor h4{font-size:1.50rem!important}
+#contentEditor h1 b{font-size:2.25rem!important}#contentEditor h2 b{font-size:2rem!important}#contentEditor h3 b{font-size:1.75rem!important}#contentEditor h4 b{font-size:1.50rem!important}
 #postDetail p.text-muted{background:#f3f3f3;border-radius:4px;padding:.25rem .5rem}
 #postDetail p.text-muted:after{content:" Tarihinde Yazıldı."}
 #postDetail .tags{text-align:left;padding:1rem 0}
