@@ -2,46 +2,48 @@ import { createClient } from "@supabase/supabase-js";
 
 const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
 
-// Site base URL (kendi domainini yaz)
-const SITE_URL = "https://seninsite.com";
+const SITE_URL = "https://ilackutusu.com";
 
 export default async function handler(req, res) {
   try {
-    // Yayında olan yazıları al (is_draft = false)
+    // Statik sayfalar
+    const staticPages = [
+      "",
+      "iletisim.html",
+      "gizlilik-politikasi.html",
+      "hakkimizda.html"
+    ];
+
     const { data: posts, error } = await supabase
       .from("posts")
-      .select("slug, updated_at")
-      .eq("is_draft", false);
+      .select("slug, created_at")
+      .is("taslak", null); // Yayınlanmış yazılar
 
     if (error) {
       console.error("Supabase hata:", error);
       return res.status(500).send("Veri alınamadı");
     }
 
-    // XML formatlı sitemap oluştur
     const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  ${staticPages
+    .map(page => `
   <url>
-    <loc>${SITE_URL}</loc>
+    <loc>${SITE_URL}/${page}</loc>
     <lastmod>${new Date().toISOString()}</lastmod>
-    <priority>1.0</priority>
-  </url>
+    <priority>0.6</priority>
+  </url>`)
+    .join("")}
   ${posts
-    .map(post => {
-      const lastmod = post.updated_at
-        ? new Date(post.updated_at).toISOString()
-        : new Date().toISOString();
-      return `
+    .map(post => `
   <url>
     <loc>${SITE_URL}/${post.slug}</loc>
-    <lastmod>${lastmod}</lastmod>
+    <lastmod>${post.created_at ? new Date(post.created_at).toISOString() : new Date().toISOString()}</lastmod>
     <priority>0.8</priority>
-  </url>`;
-    })
+  </url>`)
     .join("")}
 </urlset>`;
 
-    // Header ayarla ve XML döndür
     res.setHeader("Content-Type", "application/xml");
     res.status(200).send(sitemap);
   } catch (err) {
