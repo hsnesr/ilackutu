@@ -40,7 +40,7 @@
             <h1>${post.title}</h1>
             <p class="text-muted bg-light">${new Date(post.created_at).toLocaleDateString()}</p>
             ${post.media_urls && post.media_urls.length > 0 
-    ? post.media_urls.map(url => `<img src="${url}" alt="Post image" style="max-width:100%;margin-top:1rem;border-radius:12px;" />`).join("")
+    ? post.media_urls.map(url => `<img src="${url}" alt="Post image" style="max-width:100%;margin:1rem 0;border-radius:12px;" />`).join("")
     : ""}   
             <div id="PostContentLyrics">${post.content}</div>
             <div class="tags">${post.tags}</div>

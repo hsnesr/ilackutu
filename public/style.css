@@ -1,314 +1,61 @@
-/* Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
-
-/* Reset */
-*, *::before, *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{font-family:'Roboto',sans-serif;font-size:1rem;font-weight:400;background:#F1F1F1;color:#1C1C1C;line-height:1.6;scroll-behavior:smooth}
+a{color:#0d6efd;text-decoration:none}
+a:hover{text-decoration:underline}
+img{max-width:100%;height:auto;display:block}
+button,input,textarea,select{font:inherit;border:none;outline:none;background:none}
+button{cursor:pointer}
+h1,h2,h3,h4,h5,h6{font-weight:500;line-height:1.2;margin-bottom:.5rem}
+#postbody h1,#postbody h2,#postbody h3,#postbody h4,#postbody h5,#postbody h6{font-weight:600}
+p{margin-bottom:1rem}
+b,strong{font-size:1rem;font-weight:600}
+.alert-green{background:#2ECC71;color:#F8F8F8}
+.alert-red{background:#E07A5F;color:#F8F8F8}
+.alert-blue{background:#4A90E2;color:#F8F8F8}
+input[type="search"]::-webkit-search-cancel-button{display:none;-webkit-appearance:none}
+#postbody table{width:100%;border-collapse:collapse;margin-top:10px}
+#postbody table th,#adminbody th,#postbody table td,#adminbody td{border:1px solid #ccc;padding:8px;text-align:left}
+body#indexbody h5.card-title{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;text-overflow:ellipsis;font-weight:500}
+body#indexbody #posts .card{overflow:hidden;border:none}
+#posts .card img,#postsContainer .card img{min-height:120px!important;height:120px!important}
+body#indexbody .card-text,body#egzersizspor .card-text,body#saglikliyasambody .card-text,body#egitimbody .card-text{display:none}
+body#indexbody .text-muted{color:white}
+#postDetail{padding:2rem;font-family:'Roboto',sans-serif;font-size:1rem}
+#postDetail p{font-size:1rem;line-height:1.6rem;font-weight:400;text-align:left}
+#postDetail h1,#postDetail h2,#postDetail h3,#postDetail h4,#postDetail h1 b,#postDetail h2 b,#postDetail h3 b,#postDetail h4 b{padding:.5rem 0;text-align:left;font-weight:600;font-size:1.75rem}
+#postDetail p.text-muted{background:#f3f3f3;border-radius:4px;padding:.25rem .5rem}
+#postDetail p.text-muted:after{content:" Tarihinde Yazıldı."}
+#postDetail .tags{text-align:left;padding:1rem 0}
+#postDetail img{width:100%;height:auto;object-fit:cover;object-position:center;border-radius:12px;margin:.25rem 0}
+#cookieBanner .card{max-width:100%;font-size:.95rem}
+#progressBar{position:fixed;top:0;left:0;height:3px;width:0%;background-color:#0d6efd;z-index:9999;transition:width .4s ease}
+.blue-loader{width:35px;height:35px;border:4px solid #ccc;border-top-color:#212529;border-right-color:#212529;border-radius:50%;animation:spin 1s linear infinite;margin:50px auto}
+#navbar-placeholder{border-bottom:1px solid rgba(0,0,0,.175)}
+@keyframes spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+@media(max-width:576px){
+#searchForm{flex-direction:column;gap:.5rem}
+body#postbody main.container .row{margin:2rem auto!important}
+main.container .row img{margin:0!important}
+body#indexbody #searchres {width:100%!important;margin:2rem auto!important}
+#cookieBanner .card{width:100%!important;font-size:.85rem}
+#navbar-placeholder{flex-direction:column;align-items:center;padding:.75rem 0;gap:.25rem}
+#searchInput,.btn{width:100%}
+#postDetail{padding:1rem;font-size:.875rem}
+#postDetail p{font-size:.85rem}
+b,strong,span{font-size:.875rem}
+.card-body{padding:1rem}
+body#iletisim main.container,body#telif-hakki main.container,body#gizlilik-politikasi main.container{width:100%!important;margin:2rem auto!important}
 }
-
-html, body {
-  font-family: 'Roboto', sans-serif;
-  background: #F1F1F1;
-  color: #1C1C1C;
-  line-height: 1.6;
-  scroll-behavior: smooth;
+@media(min-width:577px) and (max-width:768px){
+#navbar-placeholder{flex-wrap:wrap;justify-content:center;gap:1rem}
+body#indexbody #searchres {width:100%!important;margin:2rem auto!important}
+#cookieBanner .card{width:90%!important}
+.card-body{padding:1.25rem}
+body#iletisim main.container,body#telif-hakki main.container,body#gizlilik-politikasi main.container{width:75%!important;margin:2rem auto!important}
 }
-
-a {
-  color: #0d6efd;
-  text-decoration: none;
+@media(min-width:769px){
+#main-placeholder{padding-left:1.5rem;padding-right:1.5rem}
+body#iletisim main.container,body#telif-hakki main.container,body#gizlilik-politikasi main.container{width:75%!important;margin:2rem auto!important}
 }
-a:hover {
-  text-decoration: underline;
-}
-
-img {
-  max-width: 100%;
-  height: auto;
-  display: block;
-}
-
-ul, ol {
-  /*list-style: none;*/
-}
-
-button, input, textarea, select {
-  font: inherit;
-  border: none;
-  outline: none;
-  background: none;
-}
-
-button {
-  cursor: pointer;
-}
-
-h1, h2, h3, h4, h5, h6 {
-  font-weight: 500;
-  line-height: 1.2;
-  margin-bottom: 0.5rem;
-}
-
-#postbody h1, #postbody h2, #postbody h3, #postbody h4, #postbody h5, #postbody h6 {
-  font-weight: 600;
-}
-
-p {
-  margin-bottom: 1rem;
-}
-
-/* Typography */
-body {
-  font-size: 1rem;
-  font-weight: 400;
-}
-
-b, strong {
-  font-size: 1rem;
-  font-weight: 600;
-}
-
-/* ALERTLER */
-.alert-green {background: #2ECC71;color: #F8F8F8;}
-.alert-red {background: #E07A5F;color: #F8F8F8;}
-.alert-blue {background: #4A90E2;color: #F8F8F8;}
-
-/* Search Input */
-input[type="search"]::-webkit-search-cancel-button {
-  display: none;
-  -webkit-appearance: none;
-}
-
-/* Table Styling */
-#postbody table{
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 10px;
-}
-
-#postbody table th, #adminbody th, #postbody table td, #adminbody td {
-  border: 1px solid #ccc;
-  padding: 8px;
-  text-align: left;
-}
-
-/* Post Card Ellipsis */
-body#indexbody h5.card-title {
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-weight: 500;
-}
-
-body#indexbody #posts .card {
-  overflow: hidden;
-  border: none;
-}
-
-#posts .card img, #postsContainer .card img{
-  min-height: 120px!important;
-  height: 120px!important;
-}
-
-body#indexbody .card-text,
-body#egzersizspor .card-text,
-body#saglikliyasambody .card-text,
-body#egitimbody .card-text {
-  display: none;
-}
-
-body#indexbody .text-muted {
-  color: white;
-}
-
-/* Post Detail */
-#postDetail {
-  padding: 2rem;
-  font-family: 'Roboto', sans-serif;
-  font-size: 1rem;
-}
-
-#postDetail p {
-  font-size: 1rem;
-  line-height: 1.6rem;
-  font-weight: 400;
-  text-align: left;
-}
-
-#postDetail h1, #postDetail h2, #postDetail h3, #postDetail h4,
-#postDetail h1 b, #postDetail h2 b, #postDetail h3 b, #postDetail h4 b {
-  padding: 0.5rem 0;
-  text-align: left;
-  font-weight: 600;
-  font-size: 2rem;
-}
-
-#postDetail p.text-muted {
-  background: #f3f3f3;
-  border-radius: 4px;
-  padding: 0.25rem 0.5rem;
-}
-
-#postDetail p.text-muted:after {
-  content: " Tarihinde Yazıldı.";
-}
-
-#postDetail .tags {
-  text-align: left;
-  padding: 1rem 0;
-}
-
-#postDetail img {
-  width: 100%;
-  height: auto;
-  object-fit: cover;
-  object-position: center;
-  border-radius: 12px;
-  margin: 0.25rem 0;
-}
-
-/* Cookie Banner */
-#cookieBanner .card {
-  max-width: 100%;
-  font-size: 0.95rem;
-}
-
-/* Progress Bar */
-#progressBar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 3px;
-  width: 0%;
-  background-color: #0d6efd;
-  z-index: 9999;
-  transition: width 0.4s ease;
-}
-
-/* Loader */
-.blue-loader {
-  width: 35px;
-  height: 35px;
-  border: 4px solid #ccc;
-  border-top-color: #212529;
-  border-right-color: #212529;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-  margin: 50px auto;
-}
-
-#navbar-placeholder {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.175);
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-/* Responsive */
-@media (max-width: 576px) {
-  #searchForm {
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-body#postbody main.container .row {margin: 2rem auto!important;}  
-main.container .row img {margin:0!important;}
-body#indexbody #searchres .w-75,
-main.container,
-main.container .mx-auto, 
-main.container .row,
-main.container .w-75 {
-    width:100%!important;
-    margin: 0 auto!important;
-  }
-
-  #cookieBanner .card {
-    width: 100% !important;
-    font-size: 0.85rem;
-  }
-
-  #navbar-placeholder {
-    flex-direction: column;
-    align-items: center;
-    padding: 0.75rem 0;
-    gap: 0.25rem;
-  }
-
-  #searchInput, .btn {
-    width: 100%;
-  }
-
-  #postDetail {
-    padding: 1rem;
-    font-size: 0.875rem;
-  }
-
-  #postDetail p {
-    font-size: 0.85rem;
-  }
-
-  b, strong, span {
-    font-size: 0.875rem;
-  }
-
-  .card-body {
-    padding: 1rem;
-  }
-  body#iletisim main.container,
-body#telif-hakki main.container,
-body#gizlilik-politikasi main.container {
-    width:100%!important;
-    margin: 2rem auto!important;
-}
-}
-
-@media (min-width: 577px) and (max-width: 768px) {
-  #navbar-placeholder {
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 1rem;
-  }
-
-  body#indexbody #searchres .w-75,
-main.container,
-main.container .mx-auto, 
-main.container .row,
-main.container .w-75 {
-    width:100%!important;
-    margin: 0 auto!important;
-  }
-
-
-  #cookieBanner .card {
-    width: 90% !important;
-  }
-
-  .card-body {
-    padding: 1.25rem;
-  }
-  body#iletisim main.container,
-body#telif-hakki main.container,
-body#gizlilik-politikasi main.container {
-    width:75%!important;
-    margin: 2rem auto!important;
-}
-}
-
-@media (min-width: 769px) {
-  #main-placeholder {
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
-  }
-body#iletisim main.container,
-body#telif-hakki main.container,
-body#gizlilik-politikasi main.container {
-    width:75%!important;
-    margin: 2rem auto!important;
-}
-  }
