@@ -51,6 +51,7 @@ body#indexbody #searchres {width:100%!important;margin:2rem auto!important}
 #postDetail p{font-size:.85rem}
 b,strong,span{font-size:.875rem}
 .card-body{padding:1rem}
+
 body#iletisim main.container,body#telif-hakki main.container,body#gizlilik-politikasi main.container{width:100%!important;margin:2rem auto!important}
 }
 @media(min-width:577px) and (max-width:768px){

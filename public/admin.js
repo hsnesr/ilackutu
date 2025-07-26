@@ -32,41 +32,41 @@ document.getElementById("logoutBtn").addEventListener("click", () => {
 
 const contentEditor = document.getElementById("contentEditor");
 
-// PARAGRAFI OTOMATİK P TAGINA AL
-        function convertDivsToParagraphs(html) {
-  const container = document.createElement("div");
-  container.innerHTML = html;
-
-  // <div> öğelerini <p> ile değiştir
-  const newChildren = [];
-
-  container.childNodes.forEach(node => {
-    if (node.nodeType === Node.ELEMENT_NODE && node.tagName === "DIV") {
-      const p = document.createElement("p");
-      p.innerHTML = node.innerHTML.trim();
-      newChildren.push(p);
-    } else if (node.nodeType === Node.TEXT_NODE && node.textContent.trim() !== "") {
-      const p = document.createElement("p");
-      p.textContent = node.textContent.trim();
-      newChildren.push(p);
+// Enter tuşu ile <p> oluştur, Shift+Enter ile <br> ekle
+contentEditor.addEventListener("keydown", function(e) {
+  if (e.key === "Enter") {
+    e.preventDefault();
+    if (e.shiftKey) {
+      document.execCommand("insertHTML", false, "<br>");
     } else {
-      newChildren.push(node);
+      document.execCommand("insertHTML", false, "<p><br></p>");
     }
-  });
+  }
+});
 
-  container.innerHTML = "";
-  newChildren.forEach(child => container.appendChild(child));
+// Editör boşsa varsayılan olarak <p><br></p> ekle
+document.addEventListener("DOMContentLoaded", () => {
+  if (contentEditor.innerHTML.trim() === "") {
+    contentEditor.innerHTML = "<p><br></p>";
+  }
+});
 
-  return container.innerHTML;
-}
+contentEditor.addEventListener("focus", () => {
+  if (contentEditor.innerHTML.trim() === "") {
+    contentEditor.innerHTML = "<p><br></p>";
+  }
+});
+
+
+
 
 // İçerik formu gönderimi
 document.getElementById("contentForm").addEventListener("submit", async (e) => {
   e.preventDefault();
 
   const title = document.getElementById("title").value.trim();
-  const rawContent = contentEditor.innerHTML.trim();
-  const content = convertDivsToParagraphs(rawContent);
+  let content = contentEditor.innerHTML.trim();
+  content = content.replace(/<p><br><\/p>/g, ""); // boş paragrafları temizle
   const tags = document.getElementById("tags").value.trim().split(",").map(t => t.trim()).filter(Boolean);
   const editId = document.getElementById("editId").value;
   const message = document.getElementById("message");
