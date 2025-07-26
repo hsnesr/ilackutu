@@ -21,7 +21,7 @@ export default async function handler(req, res) {
   try {
     const { error } = await supabase
       .from("posts")
-      .update({ taslak: true }) // 👈 sütun adı burada doğru olmalı
+      .update({ is_draft: true }) // 👈 sütun adı burada doğru olmalı
       .in("id", ids);
 
     if (error) {

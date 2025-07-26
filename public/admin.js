@@ -254,7 +254,7 @@ async function loadContents() {
     data.forEach(post => {
   const row = document.createElement("tr");
 
-  const isDraft = post.taslak === true;
+  const isDraft = post.is_draft === true;
 
   row.innerHTML = `
   <td><input type="checkbox" class="secim-checkbox" data-id="${post.id}"></td>
